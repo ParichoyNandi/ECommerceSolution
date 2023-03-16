@@ -1,0 +1,67 @@
+﻿@using Entities;
+@model ECommPortal.Models.ProductListDashboardViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row form-row">
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Product List </span>
+                </div>
+            </div>
+            
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+            <div class="float-right" style="padding-bottom: 2%; display: flex; justify-content: flex-end; padding-right: 2%;align-items: center;">
+                <lable for="publish_status" style="padding-right: 2%;"> Publish Status:</lable>        
+                <p id="getValue">
+                <select name="IsPublished" id="IsPublished">
+                    <option value="true">Published</option>a
+                    <option value="false">Unpublished</option>
+                </select>
+                <button>Search</button>
+                </p>
+            </div>
+            
+            <div id="wrapper" class="table-responsive accordian-table-class">
+
+                <table id="table_detail1"
+                       align=center cellpadding=10 border='1' class="">
+
+                    <tr class="head">
+                        <th> Product Code</th>
+                        <th >Product Name</th>
+                        <th >Expired Date</th>
+                        <th>Status</th>
+                        <th>Modify Product</th>
+                       
+                    </tr>
+                    @{
+
+                        foreach (var productlist in Model.ProductLists)
+                        {
+                            <tr>
+                            <td class="blockquote">@productlist.ProductCode</td>
+                                <td class="blockquote">@productlist.ProductName</td>
+                                <td class="blockquote">@productlist.ValidFrom <a href="">Modify</a></td>
+                                <td class="blockquote" >@productlist.StatusID</td>
+                                <td class="blockquote"><button type="button">Modify Fees</button>
+                                <button type="button">Modify Details</button></td>
+                            </tr>
+                        }
+                    }
+                   
+
+        </table>
+       </div>
+        </div>
+        </div>
+        </div>

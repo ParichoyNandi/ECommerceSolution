@@ -1,0 +1,175 @@
+﻿@*@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers*@
+@using Entities;
+@model ECommPortal.Models.CreatePlanViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row form-row">
+
+    
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Plan Form </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="Plan" asp-action="Create" enctype="multipart/form-data">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class form-table-select multiple-selection" asp-for="@Model.ChoosenBrandsLists" multiple data-live-search="true">
+
+
+                                    @foreach (var b in Model.BrandLists)
+                                    {
+                                        <option value=@b.BrandID>@b.BrandName</option>
+
+                                    }
+                                </select>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div id="Product-form">
+
+                            <div class="form-group">
+                                <label class="color-dark">Plan Code</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" asp-for="@Model.choosenPlan.PlanCode" placeholder="Enter Plan Code" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Plan Name</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" asp-for="@Model.choosenPlan.PlanName" placeholder="Enter Plan Name" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Plan Description</label>
+                                <div class="input-group">
+
+                                    <textarea class="form-control" rows="2" cols="50" asp-for="@Model.PlanDesc"></textarea>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid From</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="plan-valid-from" class="form-control" asp-for="@Model.ValidFrom" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid To</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="plan-valid-to" class="form-control" asp-for="@Model.ValidTo" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="color-dark">Plan Image</label>
+                                <div class="input-group">
+
+                                    <input type="file" asp-for="@Model.PlanImageIFile" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="product-submit" class="form-actions">
+
+                        <input type="submit" class="btn blue" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+      
+
+        $('#plan-valid-from').change(function () {
+            document.getElementById("plan-valid-to").setAttribute("min", document.getElementById("plan-valid-from").value);
+            document.getElementById("plan-valid-to").value = document.getElementById("plan-valid-from").value;
+        });
+
+
+
+    });
+
+    $('.multiple-selection').selectpicker();
+    $(".filter-option-inner-inner").html("Choose Brand Name...");
+</script>

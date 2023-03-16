@@ -1,0 +1,374 @@
+.page-sidebar-menu
+{
+	background-color:#010214;
+}
+
+.page-header {
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;
+	background:white !important;
+}
+
+.form-row {
+	padding: 2% !important;
+}
+
+.form-box {
+	border:none !important;
+	border: 1px solid #7bafe3 !important;
+	border-radius: 10px !important;
+	padding:2% !important;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+
+.color-dark {
+	color: #010214 !important;
+}
+
+.form-box .portlet-title {
+	display: flex !important;
+	justify-content: center !important;
+	border:none !important;
+	margin-bottom:0px !important;
+
+}
+
+	.form-box .portlet-title .caption-subject {
+		font-size: 30px !important;
+		font-family: 'FontAwesome' !important;
+	}
+
+.heading-hr {
+	border-top: 2px solid #010214  !important;
+	margin-top: 0px !important;
+	width: 15%;
+	
+}
+
+.global-form label {
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.global-form .input-group {
+	display:block !important;
+}
+.global-form input {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #010214;
+
+}
+
+
+
+.global-form .form-group {
+	padding: 1% !important;
+	margin-bottom: 50px !important;
+}
+
+
+
+.flex-form-group .form-group {
+		
+		width: 48%;
+	}
+
+
+#lumpsum tbody tr td, #lumpsum thead tr th, #installment-table tbody tr td, #installment-table thead tr th, .allmapping tbody tr td, .allmapping thead tr th {
+	padding: 1%;
+}
+
+#installment-table .fee-installment-class, #installment-table #from-installment-id, #lumpsum .fee-component-class, .form-table-select, .allmapping select {
+	padding: 3% !important;
+	border: none !important;
+	border-bottom: 1px solid black !important;
+	width: 100% !important;
+}
+
+#name-of-brand, #exam-cat, .coupon-type-class, .coupon-cat-class, .discount-scheme-class, .form-select {
+	padding: 1% !important;
+	border: none !important;
+	border-bottom: 1px solid black !important;
+	width: 100% !important;
+}
+.flex-form-group {
+	display: flex;
+	width: 100%;
+	margin-bottom: 0px !important;
+}
+
+.show-table,.discount-mapping-show {
+	display: revert;
+}
+
+.hide-table, .discount-mapping-hide {
+	display: none;
+}
+
+
+.add-new:hover {
+	cursor:pointer !important;
+	font-weight:bold !important;
+}
+
+.page-footer {
+	background-color: aliceblue !important;
+}
+
+
+.global-form .text-form-group {
+	margin-bottom: 70px !important;
+}
+
+.multiple-selection button {
+	background: transparent !important;
+	border: none !important;
+	border-bottom: 1px solid black !important;
+	padding-bottom: 15px !important;
+}
+
+#course-centre .dropdown {
+border:none !important;
+}
+
+
+select {
+background:transparent;
+}
+
+#myPlanInput {
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	font-size: 16px;
+	padding: 7px 20px 12px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+	border-collapse: collapse;
+	width: 30%;
+	border: 1px solid #ddd;
+	border-radius: 20px !important;
+	float: inline-end;
+}
+
+	#myPlanInput th, #myPlanInput td {
+		text-align: left;
+		padding: 12px;
+	}
+
+	#myPlanInput tr {
+		border-bottom: 1px solid #ddd;
+	}
+
+	#myPlanInput tr.header, #myPlanInput tr:hover {
+			background-color: #f1f1f1;
+		}
+#myPlanTable tbody tr td label {
+	font-size: 15px !important;
+}
+
+
+.nav-item a:hover {
+	background: #36c6d3 !important;
+	color:white !important;
+}
+.page-header.navbar .page-logo .logo-default {
+	margin: 18px 0 0;
+	width: 38%;
+}
+
+
+.dropdown-menu {
+
+	min-width: 100% !important;
+	top: 20px !important;
+	height: 300px !important;
+	overflow-y: scroll !important;
+}
+
+.inner {
+overflow-y:unset !important;
+}
+
+
+#brand-multiselect .form-table-select {
+	padding: 0% !important;
+	border: none !important;
+	width: 100% !important;
+}
+
+.dashboard-subheader {
+	padding: 2%;
+	background-color: #80808030;
+	height: 200px;
+	margin-top: -25px;
+	margin-bottom: -83px;
+}
+
+
+@media only screen and (max-width: 600px) {
+	.dashboard-subheader {
+	
+	display:none !important;
+	}
+	.top-menu {
+		display: initial !important;
+	}
+	.table-form {
+	
+	overflow-y:scroll !important;
+	}
+
+		.table-form table {
+		width:900px !important;
+		}
+	.show-list {
+	display:block !important;
+	}
+	.hide-list {
+	display:none !important;
+	}
+
+	.portlet.light > .portlet-title {
+	text-align:center !important;
+	}
+
+		.portlet.light > .portlet-title > .caption {
+		line-height:inherit !important;
+		}
+	#myPlanInput {
+	width:100% !important;
+	}
+
+	.multiple-selection .dropdown-menu {
+		width: 300px !important;
+		overflow-x:scroll !important;
+	}
+
+}
+
+body {
+
+overflow-x:hidden;
+}
+
+input[type=submit] {
+	font-size: 20px !important;
+	line-height: 25px !important;
+}
+
+.exam-cat-class {
+width:100% !important;
+}
+
+.functional-div {
+width:100%;
+
+justify-content:end;
+
+}
+
+	.functional-div .action-button {
+		width: auto;
+		margin: 0px 9px;
+		display: flex;
+		height: fit-content;
+		padding: 7px 14px;
+		border-radius: 20px !important;
+		cursor:pointer;
+	}
+
+.publishedstatus p {
+margin:0px !important;
+}
+#user-menu-dropdown {
+overflow:unset !important;
+height:50px !important;
+margin-top:30px !important;
+}
+
+.logout_button:hover {
+	background-color: #36c6d3 !important;
+	color:white !important;
+}
+
+
+#coupon-code:focus {
+text-transform:uppercase !important;
+}
+
+.summerycontainer {
+
+width:100%;
+
+}
+
+.summarycontainer .summaryheading {
+	background-color: #ed2629 !important;
+	padding: 1% !important;
+	color: white !important;
+	border-top-left-radius: 5px !important;
+	border-top-right-radius: 5px !important;
+}
+
+
+.summarycontainer .summaryheading h3 {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	font-weight: initial !important;
+}
+
+.summarycontainer .summarydescription {
+	background-color: grey !important;
+	margin-bottom: 10px !important;
+}
+
+.summarycontainer .summarydescription textarea {
+		border-bottom-right-radius: 5px !important;
+		border-bottom-left-radius: 5px !important;
+	}
+
+.add-new-area {
+display:flex;
+justify-content:end;
+padding:0% 2%;
+}
+
+.add-new-area .add-new-button {
+		background-color: #ed2629 !important;
+		padding: 1.3%;
+		color: white;
+		border-radius: 20px !important;
+		cursor:pointer;
+	}
+
+
+	.newextrasummary {
+		display: none;
+	}
+
+.newextrasummary .summaryheading {
+			display: flex;
+			width:100%;
+		}
+
+.newextrasummary .summaryheading .text {
+		width: 95%;
+	}
+
+.newextrasummary .summaryheading .icon {
+		width: 5%;
+		cursor: pointer;
+		text-align: end;
+		
+	}
+.newextrasummary .summaryheading .icon i {
+		font-size: 10px;
+	}
+
+	.newextrasummary .summaryheading i {
+		color: white;
+		font-size:25px !important;
+	}
+
+
+	

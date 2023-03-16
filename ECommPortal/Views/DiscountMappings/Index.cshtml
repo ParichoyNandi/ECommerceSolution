@@ -1,0 +1,251 @@
+﻿@*@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers*@
+@using Entities;
+@model ECommPortal.Models.CreateDiscountMappingsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="row form-row">
+
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Discount Course And Center Mapping </span>
+                </div>
+
+
+
+            </div>
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="DiscountMappings" asp-action="Create">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Discount Scheme</label>
+                            <div class="input-group">
+                                <select id="name-of-discount" class="name-discount-class form-select" asp-for="@Model.MappedDiscountId">
+
+                                    <option value="" disabled selected hidden>Choose Discount Name...</option>
+                                    @foreach (var discount in Model.DiscountList)
+                                    {
+                                        <option value=@discount.DiscountSchemeID>@discount.DiscountSchemeName</option>
+
+
+                                    }
+
+                                </select>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group table-form">
+                            <label class="color-dark">Adding Course in the centre</label>
+
+
+                            <table id="course-centre" style="width:100%;">
+                                <thead style="">
+                                    <tr>
+                                        <th style="width:40%;">Centre</th>
+                                        <th style="width:40%;">Courses</th>
+                                        <th style="width:20%;">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @for (int i = 0; i < Model.CenterList.Count; i++)
+                                    {
+                                        string idname = "mappingrow" + i.ToString();
+                                        string addnewbutton = "addnewbutton" + i.ToString();
+                                        string courseselectid = "course" + i.ToString();
+                                        string centreselectid = "centre" + i.ToString();
+                                        int s = i + 1;
+                                        string idnextrow = "mappingrow" + s.ToString();
+                                        @if (i == 0)
+                                        {
+                                            <tr id="@idname" class="discount-mapping-show">
+
+                                                @{Model.CoursecenterList.Add(new CourseCenter());}
+                                                <td>
+
+
+                                                    <select id="@centreselectid" class="course-class form-table-select" asp-for="@Model.CoursecenterList[i].Center">
+
+
+                                                        <option value="">Choose Centre...</option>
+                                                        @foreach (var singlecentre in Model.CenterList)
+                                                        {
+                                                            <option value=@singlecentre.CenterID>@singlecentre.CenterName</option>
+
+
+
+
+                                                        }
+                                                    </select>
+
+                                                </td>
+
+                                                <td>
+
+
+                                                    <select id="@courseselectid" placeholder="Choose Course..." class="course-class form-table-select multiple-selection" asp-for="@Model.CoursecenterList[i].SelectedCourseList" multiple data-live-search="true">
+
+
+                                                        
+                                                        @foreach (var allcourse in Model.CourseList)
+                                                        {
+                                                            <option value=@allcourse.CourseID>@allcourse.CourseName</option>
+
+
+
+
+                                                        }
+                                                    </select>
+
+                                                </td>
+                                                <td>
+                                                    <div class="add-new" id="@addnewbutton" onclick="show('@addnewbutton','@idnextrow','@centreselectid')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                </td>
+                                            </tr>
+
+                                        }
+
+
+                                        else
+                                        {
+                                            <tr id="@idname" class="discount-mapping-hide">
+
+                                                @{Model.CoursecenterList.Add(new CourseCenter());}
+                                                <td>
+
+
+                                                    <select id="@centreselectid" class="course-class form-table-select" asp-for="@Model.CoursecenterList[i].Center">
+
+
+                                                        <option value="" selected>Choose Centre...</option>
+                                                        @foreach (var singlecentre in Model.CenterList)
+                                                        {
+                                                            <option value=@singlecentre.CenterID>@singlecentre.CenterName</option>
+
+
+
+
+                                                        }
+                                                    </select>
+
+                                                </td>
+
+                                                <td class="multiselect-column">
+
+
+                                                    <select id="@courseselectid" placeholder="Choose Course..." class="course-class form-table-select multiple-selection" asp-for="@Model.CoursecenterList[i].SelectedCourseList" multiple data-live-search="true">
+
+
+                                                       
+                                                        @foreach (var allcourse in Model.CourseList)
+                                                        {
+                                                            <option value=@allcourse.CourseID>@allcourse.CourseName</option>
+
+
+
+
+                                                        }
+                                                    </select>
+
+                                                </td>
+                                                <td>
+                                                    <div class="add-new" id="@addnewbutton" onclick="show('@addnewbutton','@idnextrow','@centreselectid')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                </td>
+                                            </tr>
+
+                                        }
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+
+
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+
+                        <input type="submit" class="btn blue" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var feescomponentvalues;
+
+    function show(addnewbutton, nextrow, selectid) {
+
+
+        var element = document.getElementById(nextrow);
+        document.getElementById(addnewbutton).style.display = "none";
+        element.classList.add("discount-mapping-show");
+        element.classList.remove("discount-mapping-hide");
+
+
+    }
+
+   
+    $('.multiple-selection').selectpicker();
+    $(".filter-option-inner-inner").html("Choose Courses...");
+ 
+   
+</script>

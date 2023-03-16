@@ -1,0 +1,186 @@
+﻿@using Entities;
+@model ECommPortal.Models.PlanListDashboardViewModel
+
+@{
+    ViewData["Title"] = "EditPlan";
+}
+<style>
+   .form-align{
+           padding-left: 2.5%;
+   }
+
+   
+    .position-btn{
+        width:25%;
+    }
+
+    .form-right{
+        text-align: right;
+    }
+
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 15%;
+  padding-left: 15%;
+  left: 0;
+  top: 0;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width:40%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+
+<div class="p-3 mb-2 backcolor">
+
+    <div class="portlet solid">
+        <div class="portlet light portlet-title caption-subject shadow">
+           
+            <div class=" color-dark">
+                <div class="head-align">
+                    <div>
+                        <div class=" color-dark headstyle">
+
+                            <h4 class=" bold uppercase" style="font-size: x-large;padding-left: 2.5%;">
+                                Edit Plan
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-align">
+                    <div class="portlet-body form global-form">
+                <form asp-controller="PlanListDashboard" asp-action="EditPlan"  id="edit-form">
+                <div id="Product-form">
+                    <div class="form-group">
+                        <label class="color-dark">Plan ID</label>
+                       
+                        <div class="input-group">
+                           
+                            <input type="number" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanID disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="color-dark">Plan Code</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanCode required>
+                        </div>
+                    </div>
+                            <div class="form-group">
+                                <label class="color-dark">Plan Name</label>
+                                <div class="input-group">
+                                        <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanName required>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label class="color-dark">Plan Language</label>
+                                    <div class="input-group">
+
+                                        <input type="text" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanLanguageName disabled>
+
+                                    </div>
+                                </div>
+                  
+                        <div class="form-group">
+                            <label class="color-dark">Valid To</label>
+                            <div class="input-group">
+                                        <input type="datetime" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.ValidTo >
+                            </div>
+                        </div>
+                    
+                </div>
+                    <div class="position-absolute" style="margin-top: 2.7%;">
+                        <div class="form-group col-md-2 search-btn">
+
+                                 <button type="submit" form="edit-form" class="modal-button btn btn-success btn-lg btn-block" href="#myModal1" >Save <i class="fa fa-bookmark" aria-hidden="true"></i></button>
+
+                                <div id="myModal1" class="modal">
+
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <span class="close">×</span>
+                                            <h4 class=" bold uppercase" style="font-size: x-large;padding-left: 2.5%;">
+                                                Confirm
+                                            </h4>
+                                            <p style="padding-left: 3%;">Do you want to save the changes? </p>
+                                            <div>
+                                                <form asp-controller="PlanListDashboard" asp-action="UpdateConfig">
+                                                    <input type="hidden" id="planID" name="planID " asp-for="ChoosenPlanId">
+                                                        <button asp-for="UpdatePlanDetails" class="position-btn btn btn-success" style="border: none;">Yes</input>
+                                                    </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                              
+                                </div>
+                </form>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+  
+
+                                                <script>
+
+    var btn = document.querySelectorAll("button.modal-button");
+    var modals = document.querySelectorAll('.modal');
+    var spans = document.getElementsByClassName("close");
+    for (var i = 0; i < btn.length; i++) {
+        btn[i].onclick = function (e) {
+            e.preventDefault();
+            modal = document.querySelector(e.target.getAttribute("href"));
+            modal.style.display = "block";
+        }
+    }
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].onclick = function () {
+            for (var index in modals) {
+                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
+            }
+        }
+    }
+    window.onclick = function (event) {
+        if (event.target.classList.contains('modal')) {
+            for (var index in modals) {
+                if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
+            }
+        }
+    }
+
+
+</script>
+
+                                                

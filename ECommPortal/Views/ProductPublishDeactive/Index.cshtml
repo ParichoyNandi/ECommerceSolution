@@ -1,0 +1,492 @@
+﻿@using Entities;
+@model ECommPortal.Models.ProductPublishDeactiveViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row form-row">
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Publish / Deactive Products </span>
+                </div>
+
+
+
+            </div>
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+           
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+        <div class="portlet-body form global-form">
+            <form asp-controller="ProductPublishDeactive" asp-action="Create">
+                <div class="form-body">
+
+                    <div class="form-group">
+                        <label class="color-dark">Choose A Brand</label>
+                        <div id="brand-multiselect" class="input-group">
+
+                            <select id="name-of-brand" class="name-brand-class" asp-for="@Model.ChoosenBrandId">
+
+
+                                <option value="" selected hidden>Choose Brand Name...</option>
+                                @foreach (var b in Model.BrandList)
+                                {
+                                    <option value=@b.BrandID>@b.BrandName</option>
+
+                                }
+                            </select>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn blue">Fetch</button>
+                    </div>
+
+                </div>
+            </form>
+
+            @if (Model.ChoosenBrandId > 0)
+            {
+                if (Model.ProductLists != null)
+                {
+                    int count = Model.ProductLists.Count;
+
+
+                    <form asp-controller="ProductPublishDeactive" asp-action="Save">
+                        <div>
+                            <input type="hidden" asp-for="@Model.ChoosenBrandId" value="@Model.ChoosenBrandId" />
+                            <div class="form-group">
+                                <label class="color-dark">Select the product you want to Publish/Deactive</label>
+                                <br>
+                                <div class="input-group table-form" style="margin-top:10px;">
+                                    
+                                    <div class="functional-div" style="display:flex;">
+                                        <div id="publishedstatus"></div>
+                                        <div id="publish-button" class="action-button" style="color:white;background:green;border:1px solid green;" onClick="myPublishFunction(@count)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+
+                                        <div id="deactive-button" class="action-button" style="color:white;background:red;border:1px solid red;" onClick="myDeactiveFunction(@count)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                        <input type="text" id="myPlanInput" onkeyup="myProductFunction()" placeholder="Search for Product.." title="Type in a name" style="padding: 4px 20px 4px 40px !important;height:40px !important;">
+                                    </div>
+                                    <br>
+                                    <div style="width:100%;margin-top:10px;">
+                                        <table id="myPlanTable" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:5%;"></th>
+                                                    <th style="width:70%;">Product Name</th>
+                                                    <th style="width:25%;">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{int i = 0; }
+                                                @foreach (var productlist in Model.ProductLists)
+                                                {
+
+                                                    string rowid = "rowid" + i.ToString();
+                                                    string productname ="productname" + i.ToString();
+                                                    string productid ="productid" + i.ToString();
+                                                    string selectproduct ="selectproduct" + i.ToString();
+                                                    string updateddeactive = "updateddeactive" + i.ToString();
+                                                    string updatedpublish= "updatedpublish" + i.ToString();
+                                                    string productpublishedvalueid = "productpublishedvalue" + i.ToString();
+
+                                                    Model.UpdatedChoosenProductLists.Add(new ECommPortal.Models.ValueObjects.ChoosenProductForActiveDeactive());
+
+
+
+                                                    <tr id="@rowid">
+
+                                                        <td>
+                                                            <input id="@productid" type="hidden" value="@productlist.ProductID" asp-for="@Model.UpdatedChoosenProductLists[i].UpdatedProductLists.ProductID" />
+                                                            <input type="hidden" value="@productlist.ProductName" asp-for="@Model.UpdatedChoosenProductLists[i].UpdatedProductLists.ProductName" />
+
+                                                            <input id="@selectproduct" type="checkbox" asp-for="@Model.UpdatedChoosenProductLists[i].statusvalue" />
+
+                                                            @*@{Model.ChoosedPlanList[i].ChoosedPlanID = planlist.PlanID;}*@
+                                                        </td>
+                                                        <td> <label id="@productname" asp-for="@Model.UpdatedChoosenProductLists[i].statusvalue">@productlist.ProductName</label></td>
+                                                        <td>
+                                                            <input type="hidden" id="@productpublishedvalueid" class="published-checkbox" value="@productlist.IsPublished" asp-for="@Model.UpdatedChoosenProductLists[i].UpdatedProductLists.IsPublished">
+                                                            @if (@productlist.IsPublished)
+                                                            {
+                                                        <div id="@updateddeactive" style="display: block; color: white; background: red; border: 1px solid red; padding: 7px 14px !important; border-radius: 20px !important;width:fit-content;cursor:pointer;" onclick="singleproductdeactive(@productlist.ProductID,@i)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                                                <div type="text" id="@updatedpublish" style="display: none; color: white; background: green; border: 1px solid green; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content; cursor: pointer; " onclick="singleproductpublish(@productlist.ProductID,@i)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+                                                            }
+                                                            else
+                                                            {
+                                                        <div id="@updateddeactive" style="display: none; color: white; background: red; border: 1px solid red; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content;cursor: pointer;" onclick="singleproductdeactive(@productlist.ProductID,@i)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                                                <div type="text" id="@updatedpublish" style="display: block; color: white; background: green; border: 1px solid green; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content; cursor: pointer;" onclick="singleproductpublish(@productlist.ProductID,@i)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+                                                            }
+
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        @*<div class="form-actions">
+                            <button type="submit" class="btn blue">Submit</button>
+                        </div>*@
+                    </form>
+                }
+
+                else
+                {
+
+                    <div style="color:red;">**** Please select Correct Brand</div>
+
+                }
+            }
+
+        </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function myPublishFunction(productcount) {
+        var flag = 0;
+        var allpublishstatus = null;
+        document.getElementById("publishedstatus").innerHTML = "";
+        for (let i = 0; i < productcount; i++) {
+            var selectedproduct = "productid" + i.toString();
+            var selectedproductid = document.getElementById(selectedproduct).value;
+            var selectproduct = "selectproduct" + i.toString();
+            
+            //var updateddeactive = "updateddeactive" + i.toString();
+            //var updatedpublish = "updatedpublish" + i.toString();
+            //var productname = "productname" + i.toString();
+            //var productpublishedvalueid = "productpublishedvalue" + i.toString();
+            
+            if (document.getElementById(selectproduct).checked == true) {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Ajax/ModifyProductIsPublish",
+                    data: { productid: selectedproductid, ispublished: true },
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response.status);
+                        if (response.status == "OK" && response.message == "Success") {
+                            var updateddeactive = "updateddeactive" + i.toString();
+                            var updatedpublish = "updatedpublish" + i.toString();
+                            var productname = "productname" + + i.toString();
+                            document.getElementById(updatedpublish).style.display = "none";
+                            document.getElementById(updateddeactive).style.display = "block";
+                            document.getElementById(productname).style.color = "green";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Selected Product Successfully Published</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML = document.getElementById("publishedstatus").innerHTML + "<p style='color:green;font-size:16px;font-weight:700'>****Selected Product Successfully Published</p>";
+                            }
+                                console.log(i);
+                        }
+
+                        else {
+                            flag = 1;
+                            var productname = "productname" + + i.toString();
+                            document.getElementById(productname).style.color = "red";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML = document.getElementById("publishedstatus").innerHTML + "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+
+                        }
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+        }
+      
+
+        }
+
+    
+
+  
+
+
+    function myDeactiveFunction(productcount) {
+        var flag = 0;
+        var allpublishstatus = null;
+        document.getElementById("publishedstatus").innerHTML = "";
+        for (let i = 0; i < productcount; i++) {
+            var selectproduct = "selectproduct" + i.toString();
+            var selectedproduct = "productid" + i.toString();
+            var selectedproductid = document.getElementById(selectedproduct).value;
+            
+           
+            // var productpublishedvalueid = "productpublishedvalue" + i.toString();
+            
+            if (document.getElementById(selectproduct).checked == true) {
+                console.log(i);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Ajax/ModifyProductIsPublish",
+                    data: { productid: selectedproductid, ispublished: false },
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response.status);
+                        if (response.status == "OK" && response.message == "Success") {
+                            var updateddeactive = "updateddeactive" + i.toString();
+                            var updatedpublish = "updatedpublish" + i.toString();
+                            var productname = "productname" + + i.toString();
+                            document.getElementById(updatedpublish).style.display = "block";
+                            document.getElementById(updateddeactive).style.display = "none";
+                            document.getElementById(productname).style.color = "green";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Product Successfully Deactivated</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML += "<p style='color:green;font-size:16px;font-weight:700'>****Product Successfully Deactivated</p>";
+                            }
+                                console.log(i);
+                        }
+
+                        else {
+                            flag = 1;
+                            var productname = "productname" + + i.toString();
+                            document.getElementById(productname).style.color = "red";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML += "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                        }
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+        }                
+
+    }
+
+
+
+
+    function myProductFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myPlanInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myPlanTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+    function checkfunction(checkboxid, rowno) {
+
+        if (document.getElementById("checkboxid").checked == true) {
+            document.getElementById("checkboxid").checked == false;
+            
+        }
+        else {
+              document.getElementById("checkboxid").checked == true;
+            
+        }
+
+    }
+
+
+    function singleproductpublish(selectedproductid, rowid) {
+
+
+        var updateddeactive = "updateddeactive" + rowid.toString();
+        var updatedpublish = "updatedpublish" + rowid.toString();
+        var productname = "productname" + rowid.toString();
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/ModifyProductIsPublish",
+            data: { productid: selectedproductid, ispublished: true },
+            success: function (response) {
+                console.log(response);
+                console.log(response.status);
+                if (response.status == "OK" && response.message == "Success") {
+
+                    document.getElementById(updatedpublish).style.display = "none";
+                    document.getElementById(updateddeactive).style.display = "block";
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Product Successfully Published</p>";
+                    document.getElementById(productname).style.color = "green";
+                }
+
+                else {
+
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message+"</p>";
+                    document.getElementById(productname).style.color = "red";
+
+                }
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+    
+
+    function singleproductdeactive(selectedproductid,rowid) {
+
+
+        var updateddeactive = "updateddeactive" + rowid.toString();
+        var updatedpublish = "updatedpublish" + rowid.toString();
+        var productname = "productname" + rowid.toString();
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/ModifyProductIsPublish",
+            data: { productid: selectedproductid,ispublished:false },
+            success: function (response) {
+                console.log(response);
+                console.log(response.status);
+                if (response.status == "OK" && response.message == "Success") {
+
+                   document.getElementById(updatedpublish).style.display = "block";
+                   document.getElementById(updateddeactive).style.display = "none";
+                   document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Product Successfully Deactivated</p>";
+                   document.getElementById(productname).style.color = "green";
+                }
+
+                else {
+
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message+"</p>";
+                    document.getElementById(productname).style.color = "red";
+
+                }
+               
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+
+    jQuery(document).ready(function ($) {
+
+
+
+        $("#coupon-cat").on('change', function () {
+            var e = document.getElementById("coupon-cat");
+
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/AjaxMethod",
+                data: { catid:e.value },
+                success: function (response) {
+                    console.log(response);
+                    var select = document.getElementById('coupon-items');
+                    $('#coupon-items')
+                        .empty()
+                        .append('<option value="" selected>Choose Coupon Code...</option>');
+                
+                    for (var i = 0; i < response.length; i++) {
+
+                        var opt = document.createElement('option');
+                        opt.value = response[i].couponID;
+                        opt.innerHTML = response[i].couponCode;
+                        select.appendChild(opt);
+
+
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+    });
+</script>

@@ -1,0 +1,415 @@
+﻿@*@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers*@
+@using Entities;
+@model ECommPortal.Models.CreateCouponsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row form-row">
+
+    
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Coupon Form </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+
+
+            <div class="portlet-body form global-form">
+                <form asp-controller="Coupons" asp-action="Create">
+                    <div class="form-body">
+
+
+
+                        <div class="form-group">
+                            <label class="color-dark">Coupon code</label>
+                            <div class="input-group">
+
+
+                                <input type="text" id="coupon-code" class="form-control" asp-for="@Model.CouponBasicDetailsList.CouponCode" placeholder="Enter the Coupon code" onkeyup="convertuppercase('coupon-code')" maxlength="20" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="color-dark">Coupon Name</label>
+                            <div class="input-group">
+
+
+                                <input type="text" class="form-control" asp-for="@Model.CouponBasicDetailsList.CouponName" placeholder="Enter the Coupon name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-form-group">
+                            <label class="color-dark">Coupon Description</label>
+                            <div class="input-group">
+
+
+                                <textarea type="text" class="form-control" asp-for="@Model.CouponBasicDetailsList.CouponDesc" placeholder="Enter Coupon Description" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brands</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class form-table-select multiple-selection" asp-for="@Model.ChoosenBrandLists" multiple data-live-search="true">
+
+                                    @{string brandliststring = null; }
+                                    @foreach (var b in Model.BrandLists)
+                                    {
+                                        if (Model.ChoosenBrandLists.Contains(b.BrandID))
+                                        {
+                                            if (brandliststring == null)
+                                            {
+                                                brandliststring = b.BrandName;
+                                            }
+                                            else
+                                            {
+                                                brandliststring = brandliststring + "," + b.BrandName;
+                                            }
+                                            <option value=@b.BrandID selected>@b.BrandName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@b.BrandID>@b.BrandName</option>
+                                        }
+
+                                    }
+
+                                    @if (Model.ChoosenBrandLists.Count > 0)
+                                    {
+                                        <script type="text/javascript">
+                                         var x = document.getElementsByClassName("filter-option-inner-inner");
+                                        for (var i = 0; i < x.length; i++)
+                                        {
+                                            x[i].html = "@brandliststring";
+                                        }
+                                        </script>
+
+
+                                    }
+
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+
+                        <input type="submit" class="btn blue" value="Proceed" />
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+            @if (Model.ChoosenBrandLists.Count > 0)
+            {
+
+                <div class="portlet-body form global-form">
+                    <form asp-controller="Coupons" asp-action="Save">
+
+                        <input type="hidden" class="form-control" value="@Model.CouponBasicDetailsList.CouponCode" asp-for="@Model.CouponBasicDetailsList.CouponCode" required>
+                        <input type="hidden" class="form-control" value="@Model.CouponBasicDetailsList.CouponName" asp-for="@Model.CouponBasicDetailsList.CouponName" placeholder="Enter the Coupon name" required>
+                        <textarea class="form-control" hidden="hidden" value="@Model.CouponBasicDetailsList.CouponDesc" asp-for="@Model.CouponBasicDetailsList.CouponDesc" placeholder="Enter Coupon Description" style="visibility: hidden;"></textarea>
+
+                        <select id="name-of-brand" class="name-brand-class form-table-select" asp-for="@Model.ChoosenBrandLists" multiple hidden>
+
+                            
+                            @foreach (var b in Model.BrandLists)
+                            {
+                                <option value=@b.BrandID hidden>@b.BrandName</option>
+
+                            }
+                        </select>
+
+
+
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="color-dark">Coupon Type</label>
+                                <div class="input-group">
+                                    <select id="coupon-type" class="coupon-type-class" asp-for="@Model.CouponBasicDetailsList.CouponTypeDetails.CouponTypeID">
+
+                                        <option value="" selected>Choose Coupon Type...</option>
+                                        @foreach (var coup in Model.CouponTypeList)
+                                        {
+                                            <option value=@coup.CouponTypeID>@coup.CouponTypeDesc</option>
+
+
+                                        }
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Coupon category</label>
+                                <div class="input-group">
+                                    <select id="coupon-cat" class="coupon-cat-class" asp-for="@Model.CouponBasicDetailsList.CategoryDetails.CouponCategoryID">
+
+                                        <option value="" selected>Choose Coupon category...</option>
+                                        @foreach (var coupcat in Model.CouponCategoryList)
+                                        {
+                                            <option value=@coupcat.CouponCategoryID>@coupcat.CouponCategoryDesc</option>
+
+
+                                        }
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Number Of Coupon</label>
+                                <div class="input-group">
+
+
+                                    @{Model.CouponBasicDetailsList.CouponCount = 1;}
+
+                                    <input type="number" class="form-control" id="no-coupon" asp-for="@Model.CouponBasicDetailsList.CouponCount" disabled>
+
+
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Discount Scheme</label>
+                                <div class="input-group">
+
+
+
+                                    <select id="discount-scheme" class="discount-scheme-class" asp-for="@Model.CouponBasicDetailsList.DiscountDetails.DiscountSchemeID">
+
+                                        <option value="" disabled selected hidden>Choose Discount Scheme...</option>
+                                        @foreach (var discount in Model.DiscountSchemeForcoupon)
+                                        {
+                                            <option value=@discount.DiscountSchemeID>@discount.DiscountSchemeName</option>
+
+
+                                        }
+
+                                    </select>
+
+
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Greater than purchase amount</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" id="purchase-amount" value="0" asp-for="@Model.CouponBasicDetailsList.GreaterThanAmount" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid From</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="coupon-valid-from" class="form-control" asp-for="@Model.CouponBasicDetailsList.ValidFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid To</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="coupon-valid-to" class="form-control" asp-for="@Model.CouponBasicDetailsList.ValidTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Customer Code</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" id="customer-code" asp-for="@Model.CouponBasicDetailsList.CustomerCode" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                                <div class="form-group" style="width:20%;">
+                                    <label class="color-dark">Coupon Is Private</label>
+                                </div>
+
+                                <div class=" form-group input-group" style="padding-top: 11px !important;">
+
+                                    <input type="checkbox" class="form-control" id="Couponprivatetype" asp-for=" @Model.CouponBasicDetailsList.IsPrivate" style=" width:6%;height:50%;">
+                                    <span>Yes</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-actions">
+
+                            <input type="submit" id="form-submit" class="btn blue" value="Submit" />
+                        </div>
+                    </form>
+                </div>
+            }
+            </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+<script>
+
+    function convertuppercase(textid)
+    {
+        
+        //document.getElementById(textid).setAttribute("style", "text-transform: uppercase;");
+        document.getElementById(textid).value = document.getElementById(textid).value.toUpperCase();
+    }
+
+</script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#coupon-valid-from').change(function () {
+            document.getElementById("coupon-valid-to").setAttribute("min", document.getElementById("coupon-valid-from").value);
+            document.getElementById("coupon-valid-to").value = document.getElementById("coupon-valid-from").value;
+        });
+     
+        $('#coupon-type').click(function () {
+
+            var valueselect = document.getElementById("coupon-type").value;
+            if (valueselect != "" && valueselect == 1) {
+                document.getElementById("no-coupon").value = "1";
+                $("#no-coupon").prop('disabled', false);       // if disabled, enable
+               
+               
+            }
+            else {
+                $("#no-coupon").prop('disabled', false);       // if disabled, enable
+                document.getElementById("no-coupon").value = "1";
+               $("#no-coupon").prop('disabled', true);        // if enabled, disable
+                
+            }
+           
+        })
+
+        $('#form-submit').click(function () {
+            $("#no-coupon").prop('disabled', false);       // if disabled, enable
+        })
+
+        $('#coupon-cat').click(function () {
+
+            var valueselect = document.getElementById("coupon-cat").value;
+            if (valueselect == 2) {
+                document.getElementById("purchase-amount").value = 0;
+                document.getElementById("customer-code").value = null;
+                $("#purchase-amount").prop('disabled', false);       // if disabled, enable
+                $("#customer-code").prop('disabled', true);        // if enabled, disable
+                
+              
+               
+            }
+            else {
+
+                if (valueselect == 3) {
+                    document.getElementById("customer-code").value = null;
+                    $("#customer-code").prop('disabled', false);       // if disabled, enable
+                    
+
+
+                }
+                else {
+                    document.getElementById("customer-code").value = null;
+                    $("#customer-code").prop('disabled', true);        // if enabled, disable
+                    
+                }
+               
+                $("#purchase-amount").prop('disabled', true);        // if enabled, disable
+                document.getElementById("purchase-amount").value = 0;
+            }
+
+           
+
+
+        })
+        $('.multiple-selection').selectpicker();
+        document.getElementById("no-coupon").value = "1";
+        //$(".filter-option-inner-inner").html("Choose Brand Name...");
+       
+       
+       
+    });
+
+    
+
+</script>
+
+
+
+

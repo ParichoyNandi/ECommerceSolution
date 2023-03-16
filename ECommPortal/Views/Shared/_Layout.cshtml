@@ -1,0 +1,822 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - ECommPortal</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for statistics, charts, recent events and reports" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="~/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="~/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="~/css/custom_style.css" rel="stylesheet" />
+    <script src="~/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+   
+
+    <style>
+
+        .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle:hover {
+            background-color: none !important;
+        }
+    </style>
+
+    <!--start:Parichoy Nandi CSS-->
+    <style>
+          .btn{
+            padding: 6px 6px !important;
+    }
+
+    .table_detail1 {
+            width: 100% ;
+            border-collapse: collapse !important;
+        }
+    .table_detail1 td {
+                padding: 0.5% 1.3% !important;
+            }
+
+    .table_detail1 .head th {
+                padding: 1.1% 1.3% ;
+                color: white ;
+                background: #337AB7 ;
+            }
+
+    .table_detail1 tr:hover {
+                background-color: #CDD8EF !important;
+                color: black !important;
+            }
+
+     .table_detail1 button:hover{
+                background : black;
+                color:white;
+            }
+
+    #myPlanInput1 {
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        font-size: 16px;
+        padding: 7px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        float: inline-end;
+    }
+
+        #myPlanInput1 th, #myPlanInput1 td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #myPlanInput1 tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+
+    #myPlanTable1 tbody tr td label {
+        font-size: 15px !important;
+    }
+
+    .backcolor{
+        color: #000;
+        background-color: #cdd8ef;
+        padding-top: 3%;
+    }
+
+    .shadow{
+        box-shadow: 1px 1px 18px 0px #000000ba;
+        padding: 0px !important;
+    }
+
+    .headstyle{
+         background-color: #337ab7 !important;
+         padding-bottom: 0.2%;
+         padding-top: 0.2%;
+         color: white !important;
+    }
+    
+    .head-align{
+        padding-top: 1%;
+        margin-left: 1%; 
+        margin-bottom:2%;
+        margin-right: 2%;
+    }
+    .search-btn{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 1%;
+    }
+
+    .table-style{
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.9%;
+        padding-right: 0.9%;
+    }
+        #table_detail1 {
+            width: 100% ;
+            border-collapse: collapse !important;
+        }
+
+        #sidebar_accordian{
+            border-collapse: collapse !important;
+        }
+        #sidebar_accordian .hiddenrow{
+             display: none ;
+        }
+
+           #table_detail1 td {
+                padding: 0.5% 1.3% !important;
+            }
+
+          #table_detail1 .head th {
+                padding: 1.1% 1.3% ;
+                color: white ;
+                background: #337AB7 ;
+            }
+
+            #table_detail1 tr:hover {
+                background-color: #f40000 ;
+                color: black;
+            }
+
+            #table_detail1 button:hover{
+                background : black;
+                color:white;
+            }
+
+            #table_detail1 .hidden_row {
+                display: none ;
+            }
+
+
+        .accordian-table-class {
+            border-top-left-radius: 20px !important;
+            border-top-right-radius: 20px !important;
+        }
+
+    </style>
+    <!--end: ParichoyNandi CSS-->
+</head>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo">
+    <div class="page-wrapper">
+
+
+
+
+        <div class="page-header navbar navbar-fixed-top">
+            <!-- BEGIN HEADER INNER -->
+            <div class="page-header-inner ">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <a asp-action="index" asp-controller="Discounts">
+                        <img src="../global/img/favicon-1-1.png" alt="logo" class="logo-default" />
+                    </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <span></span>
+                    </div>
+                </div>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <!--a href="#" id="mobile-menu" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a-->
+                <a href="javascript:;" id="mobile-menu" class="menu-toggler responsive-toggler">
+                    <span></span>
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+
+
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user">
+
+                            <a href="javascript:;" class="dropdown-toggle logout_button" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img alt="" class="img-circle" src="~/user.png" />
+                                <span class="username username-hide-on-mobile" style="color:black"> @TempData["UserName"] </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul id="user-menu-dropdown" class="dropdown-menu dropdown-menu-default">
+
+                                <li class="logout_button">
+                                    <a asp-action="index" asp-controller="Accounts" class="logout_button">
+                                        <i class="icon-key"></i> Log Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-quick-sidebar-toggler logout_button">
+                            <a asp-action="index" asp-controller="Accounts" class="dropdown-toggle">
+                                <i class="icon-logout"></i>
+                            </a>
+                        </li>
+                        <!-- END QUICK SIDEBAR TOGGLER -->
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END HEADER INNER -->
+        </div>
+        <!-- END HEADER -->
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <!-- BEGIN SIDEBAR -->
+            <div class="page-sidebar-wrapper">
+                <!-- BEGIN SIDEBAR -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+
+                <div id="mobile-dropdown" class="page-sidebar navbar-collapse hide-list">
+                    <!-- BEGIN SIDEBAR MENU -->
+                    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                    <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <li class="sidebar-toggler-wrapper hide">
+                            <div class="sidebar-toggler">
+                                <span></span>
+                            </div>
+                        </li>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                        <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+
+                        <li id="dashboard-tab" class="nav-item start active open" onclick="activetab('dashboard-tab')" >
+                            <a asp-action="index" asp-controller="Dashboard" class="nav-link nav-toggle" >
+                                <i class="fa fa-graduation-cap"></i>
+                                <span class="title">Dashboard</span>
+                                <span class="selected"></span>
+                                <span class="arrow open"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#demo3" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu" style="background: #161C24;">
+                                <div style=" display: flex;justify-content: space-between;">
+                                <span class="title"><i class="fa fa-folder" aria-hidden="true"></i>Product</span>
+                                    <span><i class="fa fa-caret-down"></i></span>
+                                </div>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                                 <div class="collapse" id="demo3">
+                            <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">
+                                <li id="product-tab" class="nav-item start open list-group-item" onclick="activetab('product-tab')">
+                                    <a asp-action="index" asp-controller="Products" class="nav-link nav-toggle" >
+                                        <i class="fa fa-link"></i>
+                                        <span class="title">Create Product</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow open"></span>
+                                    </a>
+                                </li>
+                                <li id="product-Config-map-tab" class="nav-item start open list-group-item" onclick="activetab('product-Config-map-tab')">
+                                    <a asp-action="index" asp-controller="ProductConfigMappings" class="nav-link nav-toggle">
+                                        <i class="fa fa-link"></i>
+                                        <span class="title">Product Config Mapping</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow open"></span>
+                                    </a>
+                                </li>
+                                <li id="product-publish-tab" class="nav-item start open list-group-item" onclick="activetab('product-publish-tab')">
+                                    <a asp-action="index" asp-controller="ProductPublishDeactive" class="nav-link nav-toggle">
+                                        <i class="fa fa-link"></i>
+                                        <span class="title">Product Publish/Deactive</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow open"></span>
+                                    </a>
+                                </li>
+                                <li id="product-centre-feeplan-tab" class="nav-item start open list-group-item" onclick="activetab('product-centre-feeplan-tab')">
+                                    <a asp-action="index" asp-controller="ProductMappings" class="nav-link nav-toggle">
+                                        <i class="fa fa-link"></i>
+                                        <span class="title">Product Mapping</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow open"></span>
+                                    </a>
+                                </li>
+                        </ul>
+                    </div>
+                        <li><a href="#demo4" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu" style="background: #161C24;">
+                                <div style=" display: flex;justify-content: space-between;">
+                                    <span class="title"><i class="fa fa-folder" aria-hidden="true"></i>Plan</span>
+                                    <span><i class="fa fa-caret-down"></i></span>
+                                </div>
+                                <span class="selected arrow open"></span></a></li>
+                    <div class="collapsing" id="demo4" onclick="activetab('')">
+
+                        <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">
+                            <li id="plan-tab" class="nav-item start open list-group-item" onclick="activetab('product-tab')">
+                                <a asp-action="index" asp-controller="Plan" class="nav-link nav-toggle">
+                                    <i class="fa fa-link"></i>
+                                    <span class="title">Create Plan</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                            <li id="plan-product-Config-map-tab" class="nav-item start open list-group-item" onclick="activetab('plan-product-Config-map-tab')">
+                                <a asp-action="index" asp-controller="PlanProductsConfigMapping" class="nav-link nav-toggle">
+                                    <i class="fa fa-link"></i>
+                                    <span class="title">Plan Product Config Map</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                            <li id="plan-publish-tab" class="nav-item start open list-group-item" onclick="activetab('plan-publish-tab')">
+                                <a asp-action="index" asp-controller="PlanPublishDeactive" class="nav-link nav-toggle">
+                                    <i class="fa fa-link"></i>
+                                    <span class="title">Plan Publish/Deactive</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                        <li><a href="#demo1" class="list-group-item nav-toggle" data-toggle="collapse" data-parent="#MainMenu" style="background: #161C24;">
+                           <div style="display: flex;justify-content: space-between;">
+                            <span class="title"><i class="fa fa-folder" aria-hidden="true"></i>Discount</span>
+                                    <span><i class="fa fa-caret-down"></i></span>
+                                </div>
+                            <span class="selected"></span></a></li>
+                         <div class="collapse" id="demo1">
+                            <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                             <li id="discount-tab" class="nav-item start open list-group-item" onclick="activetab('discount-tab')">
+                                <a asp-action="index" asp-controller="Discounts" class="nav-link nav-toggle" >
+                                    <i class="fa fa-tag"></i>
+                                    <span class="title" >Create Discounts</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                             </li>
+                             <li id="discount-map-tab" class="nav-item start open list-group-item" onclick="activetab('discount-map-tab')">
+                                <a asp-action="index" asp-controller="DiscountMappings" class="nav-link nav-toggle">
+                                    <i class="fa fa-link"></i>
+                                    <span class="title">Create Discounts Mapping</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                             </li>
+                            </ul>
+                         </div>
+                        <li>
+                            <a href="#demo2" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu" style="background: #161C24;">
+                                <div style="display: flex;justify-content: space-between;">
+                                <span class="title"><i class="fa fa-folder" aria-hidden="true"></i>Coupons</span>
+                                    <span> <i class="fa fa-caret-down"></i></span>
+                                </div>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                        <div class="collapse" id="demo2">
+                        <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="">
+                                <li id="coupon-tab" class="nav-item start open list-group-item" onclick="activetab('coupon-tab')">
+                                    <a asp-action="index" asp-controller="Coupons" class="nav-link nav-toggle">
+                                        <i class="fa fa-gift"></i>
+                                        <span class="title">Create Coupons</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow open"></span>
+                                    </a>
+                                </li>
+                            <li id="plan-map-tab" class="nav-item start open list-group-item" onclick="activetab('plan-map-tab')">
+                                <a asp-action="index" asp-controller="PlanCouponMappings" class="nav-link nav-toggle">
+                                    <i class="fa fa-link"></i>
+                                    <span class="title">Plans & Coupons Mapping</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
+                    <li id="Product-List-Dashboard-tab" class="nav-item start open" onclick="activetab('Product-List-Dashboard-tab')" >
+                        <a asp-action="index" asp-controller="ProductListDashboard" class="nav-link nav-toggle">
+                            <i class="fa fa-th-list" aria-hidden="true"></i>
+                            <span class="title">Product List </span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+                    </li>
+                    <li id="LMS-SMS-sync-tab" class="nav-item start open" onclick="activetab('LMS-SMS-sync-tab')" >
+                        <a asp-action="index" asp-controller="LMSSMSSyncDashboard" class="nav-link nav-toggle">
+                            <i class="fa fa-th-list" aria-hidden="true"></i>
+                            <span class="title">LMS-SMS Sync Dashboard</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+                    </li>
+                    <li id="Plan-List-Dashboard-tab" class="nav-item start open" onclick="activetab('Plan-List-Dashboard-tab')" >
+                          <a asp-action="index" asp-controller="PlanListDashboard" class="nav-link nav-toggle">
+                            <i class="fa fa-th-list" aria-hidden="true"></i>
+                            <span class="title">Plan List</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                          </a>
+                    </li>
+
+
+                    </ul>
+                    
+                    <!-- END SIDEBAR MENU -->
+                    <!-- END SIDEBAR MENU -->
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+           
+       
+
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content" style="min-height: 366px;padding: 0;">
+
+                    @RenderBody()
+
+                </div>
+                <!-- END CONTENT BODY -->
+   
+            <!-- BEGIN QUICK SIDEBAR -->
+            <a href="javascript:;" class="page-quick-sidebar-toggler">
+                <i class="icon-login"></i>
+            </a>
+
+            <!-- END QUICK SIDEBAR -->
+
+
+
+        </div>
+        <!-- END CONTAINER -->
+        <!-- BEGIN FOOTER -->
+        <div class="page-footer">
+            <div class="page-footer-inner">
+                2022 &copy; Rice Smart Ecommerce Portal
+                <a target="_blank" href="#"</a> &nbsp;|&nbsp;
+                <a href="#" title="" target="_blank">Developed By Techverita</a>
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+        <!-- END FOOTER -->
+    </div>
+
+    <div class="quick-nav-overlay"></div>
+    <!-- END QUICK NAV -->
+    <!--[if lt IE 9]>
+    <script src="../assets/global/plugins/respond.min.js"></script>
+    <script src="../assets/global/plugins/excanvas.min.js"></script>
+    <script src="../assets/global/plugins/ie8.fix.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script>
+
+        function activetab(id) {
+
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById(id);
+            element.classList.add("active");
+        }
+
+
+        const last_segment = window.location.pathname.split('/').pop();
+        if (last_segment == "Coupons") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("coupon-tab");
+            element.classList.add("active");
+        }
+
+
+
+        if (last_segment == "Dashboard") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("dashboard-tab");
+            element.classList.add("active");
+        }
+
+
+
+        if (last_segment == "Discounts") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("discount-tab");
+            element.classList.add("active");
+            
+        }
+
+
+        if (last_segment == "DiscountMappings") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("coupon-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "DiscountMappings") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("discount-map-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "PlanCouponMappings") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("plan-map-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "Products") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("product-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "Plan") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("plan-tab");
+            element.classList.add("active");
+        }
+
+
+        if (last_segment == "ProductMappings") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("product-centre-feeplan-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "ProductConfigMappings") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("product-Config-map-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "ProductPublishDeactive") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("product-publish-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "PlanPublishDeactive") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("plan-publish-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "PlanProductsConfigMapping") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("plan-product-Config-map-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "LMSSMSSyncDashboard") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("LMS-SMS-sync-tab");
+            element.classList.add("active");
+        }
+
+        if (last_segment == "ProductListDashboard") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+
+            var element = document.getElementById("Product-List-Dashboard-tab");
+            element.classList.add("active");
+        }
+        if (last_segment == "PlanListDashboard") {
+            var elems = document.querySelectorAll(".nav-item");
+
+            [].forEach.call(elems, function (el) {
+                el.classList.remove("active");
+            });
+            var element = document.getElementById("Plan-List-Dashboard-tab");
+            element.classList.add("active");
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $("#mobile-menu").click(function () {
+                if ($("#mobile-dropdown").hasClass("hide-list")) {
+
+                    $("#mobile-dropdown").removeClass("hide-list");
+                    $("#mobile-dropdown").addClass("show-list");
+                }
+                else {
+
+                    if ($("#mobile-dropdown").hasClass("show-list")) {
+
+                        $("#mobile-dropdown").removeClass("show-list");
+                        $("#mobile-dropdown").addClass("hide-list");
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script src="~/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/global/plugins/moment.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
+    <script src="~/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
+    <script src="~/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/horizontal-timeline/horizontal-timeline.js" type="text/javascript"></script>
+    <script src="~/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+    <script src="~/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="~/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="bootstrap-multiselect.css" type="text/css" />
+    <script type="text/javascript" src="bootstrap-multiselect.js"></script>
+</body>
+</html>
+
+
+
+
+<!--body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ECommPortal</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+           /*@RenderBody()*/
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - ECommPortal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    /*@await RenderSectionAsync("Scripts", required: false)*/
+</!--body>
+</html-->

@@ -1,0 +1,589 @@
+﻿@*@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers*@
+@using Entities;
+@model ECommPortal.Models.CreateDiscountsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="row form-row">
+
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Discount Form </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="Discounts" asp-action="Create">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="color-dark">Name of Discount</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="@Model.DiscountschemeList.DiscountSchemeName" asp-for="@Model.DiscountschemeList.DiscountSchemeName" placeholder="Enter the name of discount" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                            <div class="form-group">
+
+                                <label class="color-dark">Valid From</label>
+                                <div class="input-group">
+                                    @if (Model.ChoosenDiscountBrandList.Count > 0)
+                                    {
+                                        <input type="date" id="discount-valid-from" class="form-control" asp-for="@Model.DiscountschemeList.ValidFrom" value="@Model.DiscountschemeList.ValidFrom.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Enter the name of discount" required>
+                                    }
+                                    else
+                                    {
+                                    <input type="date" id="discount-valid-from" class="form-control" asp-for="@Model.DiscountschemeList.ValidFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Enter the name of discount" required>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="color-dark">Valid To</label>
+                                <div class="input-group">
+                                    @if (Model.ChoosenDiscountBrandList.Count > 0)
+                                    {
+                                        <input type="date" id="discount-valid-to" class="form-control" asp-for="@Model.DiscountschemeList.ValidTo" value="@Model.DiscountschemeList.ValidTo.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Enter the name of discount" required>
+                                    }
+                                    else
+                                    {
+                                    
+                                <input type="date" id="discount-valid-to" class="form-control" asp-for="@Model.DiscountschemeList.ValidTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="Enter the name of discount" required>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class form-table-select multiple-selection" asp-for="@Model.ChoosenDiscountBrandList" multiple data-live-search="true">
+
+                                    @{string brandliststring = null; }
+                                    @foreach (var b in Model.BrandList)
+                                    {
+                                        if (Model.ChoosenDiscountBrandList.Contains(b.BrandID))
+                                        {
+                                            if (brandliststring == null)
+                                            {
+                                                brandliststring = b.BrandName;
+                                            }
+                                            else
+                                            {
+                                                brandliststring = brandliststring + "," + b.BrandName;
+                                            }
+                                            <option value=@b.BrandID selected>@b.BrandName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@b.BrandID>@b.BrandName</option>
+                                        }
+
+                                    }
+
+                                    @if (Model.ChoosenDiscountBrandList.Count > 0)
+                                    {
+                                        <script type="text/javascript">
+                                         var x = document.getElementsByClassName("filter-option-inner-inner");
+                                        for (var i = 0; i < x.length; i++)
+                                        {
+                                            x[i].html = "@brandliststring";
+                                        }
+                                        </script>
+
+
+                                    }
+
+
+                                </select>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+
+                        <input type="submit" class="btn blue" value="Proceed" />
+                    </div>
+
+                </form>
+
+                @if (Model.ChoosenDiscountBrandList.Count > 0)
+                {
+
+
+                    <form asp-controller="Discounts" asp-action="Save">
+
+                        <input type="hidden" class="form-control" value="@Model.DiscountschemeList.DiscountSchemeName" asp-for="@Model.DiscountschemeList.DiscountSchemeName" placeholder="Enter the name of discount" required>
+
+                        <input type="hidden" class="form-control" value="@Model.DiscountschemeList.ValidFrom" asp-for="@Model.DiscountschemeList.ValidFrom" placeholder="Enter the name of discount" required>
+
+                        <input type="hidden" class="form-control" value="@Model.DiscountschemeList.ValidTo" asp-for="@Model.DiscountschemeList.ValidTo" placeholder="Enter the name of discount" required>
+
+                        <select id="name-of-brand" class="name-brand-class form-table-select" asp-for="@Model.ChoosenDiscountBrandList" multiple hidden>
+
+                            <option value="" selected hidden>Choose Brand Name...</option>
+                            @foreach (var b in Model.BrandList)
+                            {
+                                <option value=@b.BrandID hidden>@b.BrandName</option>
+
+                            }
+                        </select>
+
+
+
+                        <div class="form-body">
+
+
+                            @for (int j = 0; j < Model.ChoosenDiscountBrandList.Count; j++)
+                            {
+                                <input type="hidden" class="form-control" value="@Model.ChoosenDiscountBrandList[j]" asp-for="@Model.DiscountBrandLists[j].BrandID" placeholder="Enter the name of discount" required>
+                                <div class="form-group">
+                                    <label class="color-dark" style="text-align:center;width:100%;">Discount Property</label>
+                                    <div class="form-group table-form">
+                                        <div style="display:flex;"><label class="color-dark" style="width:90%">Lumpsum</label></div>
+
+                                        <table id="lumpsum" style="width:100%;">
+                                            <thead style="">
+                                                <tr>
+
+                                                    <th style="width:30%;">Discount Percentage</th>
+                                                    <th style="width:25%;">Discount Amount </th>
+                                                    <th style="width:30%;">Fees Component</th>
+                                                    <th style="width:15%;">Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+
+                                                @for (int i = 0; i < Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList().Count; i++)
+                                                {
+                                                    string idname = "lumpsumrow" + i.ToString();
+                                                    string idaddnewlump = "ddnewsumrow" + i.ToString();
+                                                    string selectid = "fee-component" + i.ToString();
+                                                    int s = i + 1;
+                                                    string idnameclick = "lumpsumrow" + s.ToString();
+                                                    string lumpsumpercent = "lumpsumpercent" + i.ToString()+"Brand"+j.ToString();
+                                                    string lumpsumamount = "lumpsumamount" + i.ToString() + "Brand" + j.ToString();
+                                                    @if (i == 0)
+                                                    {
+                                                <tr id="@idname" class="show-table">
+
+
+
+                                                    <td>
+
+                                                        <input id="@lumpsumpercent" type="number" class="form-control" tabindex="-1"  asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].DiscountRate" placeholder="Enter percentage of Discount(%)" onclick="disableadjucent('@lumpsumpercent','@lumpsumamount')" required>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <input id="@lumpsumamount" type="number" class="form-control" tabindex="-1" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].DiscountAmount" placeholder="Enter amount of Discount" onclick="disableadjucent('@lumpsumamount','@lumpsumpercent')" required>
+
+                                                    </td>
+                                                    <td>
+
+
+
+                                                        <input type="hidden" class="form-control" value="1" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].IsApplicableOn">
+
+                                                        <select id="@selectid" class="fee-component-class" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].FeeComponentID">
+
+
+                                                            <option value="" disabled selected hidden>Choose Fees Component...</option>
+                                                            @foreach (var compo in Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList())
+                                                            {
+                                                                <option value=@compo.FeeComponentID>@compo.FeeComponentName</option>
+                                                            }
+                                                        </select>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <span class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectid')"><i class="fa fa-plus"></i> Add New</span>
+                                                        <span onclick="refreshamounts('@lumpsumpercent','@lumpsumamount')"> <i class="fa fa-refresh" aria-hidden="true" style="color: #ed2629;margin-left:2px;cursor:pointer;"></i></span>
+                                                    </td>
+                                                    @{
+                                                        Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].IsApplicableOn = 1;
+                                                    }
+                                                </tr>
+
+                                                    }
+
+
+                                                    else
+                                                    {
+                                            <tr id="@idname" class="hide-table">
+
+
+
+                                                <td>
+
+                                                    <input id="@lumpsumpercent" type="number" class="form-control" tabindex="-1" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].DiscountRate" placeholder="Enter percentage of Discount(%)" onclick="disableadjucent('@lumpsumpercent','@lumpsumamount')" required>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <input id="@lumpsumamount" type="number" class="form-control" tabindex="-1" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].DiscountAmount" placeholder="Enter amount of Discount" onclick="disableadjucent('@lumpsumamount','@lumpsumpercent')" required>
+
+                                                </td>
+                                                <td>
+
+
+                                                    <input type="hidden" class="form-control" value="1" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].IsApplicableOn">
+
+
+                                                    <select id="@selectid" class="fee-component-class" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].FeeComponentID">
+
+
+                                                        <option value="" disabled selected hidden>Choose Fees Component...</option>
+                                                        @foreach (var compo in Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList())
+                                                        {
+                                                            <option value=@compo.FeeComponentID>@compo.FeeComponentName</option>
+
+
+
+
+                                                        }
+                                                    </select>
+
+                                                </td>
+                                                <td>
+                                                    <span class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectid')"><i class="fa fa-plus"></i> Add New</span>
+                                                    <span onclick="refreshamounts('@lumpsumpercent','@lumpsumamount')"> <i class="fa fa-refresh" aria-hidden="true" style="color: #ed2629;margin-left:2px;cursor:pointer;"></i></span> 
+                                                </td>
+                                                @{
+                                                    Model.DiscountBrandLists[j].DiscountSchemeLumpsumList[i].IsApplicableOn = 1;
+                                                }
+                                            </tr>
+
+                                                    }
+
+
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+
+
+                                    <div class="form-group table-form">
+                                        <div style="display:flex;"><label class="color-dark" style="width:90%">Installment</label></div>
+
+                                        <table id="installment-table" style="width:100%;">
+                                            <thead style="">
+                                                <tr>
+
+                                                    <th style="width:19%;">Discount Percentage</th>
+                                                    <th style="width:18%;">Discount Amount </th>
+                                                    <th style="width:26%;">From Installment <span style="color:red">*</span></th>
+                                                    <th style="width:24%;">Fees Component</th>
+                                                    <th style="width:13%;">Action</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                                @for (int i = 0; i < Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList().Count; i++)
+                                                {
+                                                    string idinstallname = "installmentrow" + i.ToString();
+                                                    string idinstalladdnew = "addinstallnewrow" + i.ToString();
+                                                    string idinstallselect = "fee-installment" + i.ToString();
+                                                    int s = i + 1;
+                                                    string idinstallnameclick = "installmentrow" + s.ToString();
+                                                    string installpercent= "installpercent"+ i.ToString() + "Brand" + j.ToString();
+                                                    string installamount = "installamount" + i.ToString() + "Brand" + j.ToString();
+
+                                                    @if (i == 0)
+                                                    {
+                                                <tr class="show-table" id="@idinstallname">
+
+
+
+                                                    <td>
+
+                                                        <input id="@installpercent" type="number" tabindex="-1" class="form-control" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].DiscountRate" placeholder="Enter percentage of Discount(%)" onclick="disableadjucent('@installpercent','@installamount')" required>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <input id="@installamount" type="number" tabindex="-1" class="form-control" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].DiscountAmount" placeholder="Enter amount of Discount" onclick="disableadjucent('@installamount','@installpercent')" required>
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        <select id="from-installment-id" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].FromInstalment" class="from-installment-class">
+
+                                                            <option value="" disabled selected hidden>Choose From Installment...</option>
+                                                            <option value="F">From First</option>
+                                                            <option value="L">From Last</option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                            <option value="4">Four</option>
+                                                            <option value="5">Five</option>
+                                                            <option value="6">Six</option>
+                                                            <option value="7">Seven</option>
+                                                            <option value="8">Eight</option>
+                                                            <option value="9">Nine</option>
+                                                            <option value="10">Ten</option>
+                                                            <option value="11">Eleven</option>
+                                                            <option value="12">Twelve</option>
+
+                                                        </select>
+
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" class="form-control" value="2" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].IsApplicableOn" required>
+                                                        <select id="@idinstallselect" class="fee-installment-class" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].FeeComponentID">
+
+                                                            <option value="" disabled selected hidden>Choose Fees Component...</option>
+                                                            @foreach (var compo in Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList())
+                                                            {
+                                                                <option value=@compo.FeeComponentID>@compo.FeeComponentName</option>
+
+
+
+
+                                                            }
+
+                                                        </select>
+
+                                                    </td>
+                                                    <td>
+                                                        <span class="add-new" id="@idinstalladdnew" onclick="show('@idinstallnameclick','@idinstalladdnew','@idinstallselect')"><i class="fa fa-plus"></i> Add New</span>
+                                                        <span onclick="refreshamounts('@installpercent','@installamount')"> <i class="fa fa-refresh" aria-hidden="true" style="color: #ed2629;margin-left:2px;cursor:pointer;"></i></span>
+                                                    </td>
+
+                                                </tr>
+                                                    }
+
+                                                    else
+                                                    {
+                                            <tr id="@idinstallname" class="hide-table">
+
+
+
+
+
+                                                <td>
+
+                                                    <input id="@installpercent" type="number" tabindex="-1" class="form-control" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].DiscountRate" placeholder="Enter percentage of Discount(%)" onclick="disableadjucent('@installpercent','@installamount')" required>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <input id="@installamount" type="number" tabindex="-1" class="form-control" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].DiscountAmount" placeholder="Enter amount of Discount" onclick="disableadjucent('@installamount','@installpercent')" required>
+
+                                                </td>
+
+
+                                                <td>
+
+                                                    <select id="from-installment-id" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].FromInstalment" class="from-installment-class">
+
+                                                        <option value="" disabled selected hidden>Choose From Installment...</option>
+                                                        <option value="F">From First</option>
+                                                        <option value="L">From Last</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                        <option value="4">Four</option>
+                                                        <option value="5">Five</option>
+                                                        <option value="6">Six</option>
+                                                        <option value="7">Seven</option>
+                                                        <option value="8">Eight</option>
+                                                        <option value="9">Nine</option>
+                                                        <option value="10">Ten</option>
+                                                        <option value="11">Eleven</option>
+                                                        <option value="12">Twelve</option>
+
+                                                    </select>
+
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" class="form-control" value="2" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].IsApplicableOn" placeholder="Enter percentage of Discount(%)" required>
+                                                    <select id="@idinstallselect" class="fee-installment-class" asp-for="@Model.DiscountBrandLists[j].DiscountSchemeInstallmentList[i].FeeComponentID">
+
+                                                        <option value="" disabled selected hidden>Choose Fees Component...</option>
+                                                        @foreach (var compo in Model.FeescomponentList.Where(w => w.BrandID == Model.ChoosenDiscountBrandList[j]).ToList())
+                                                        {
+                                                            <option value=@compo.FeeComponentID>@compo.FeeComponentName</option>
+
+
+
+
+                                                        }
+
+                                                    </select>
+
+                                                </td>
+                                                <td>
+
+                                                    <span class="add-new" id="@idinstalladdnew" onclick="show('@idinstallnameclick', '@idinstalladdnew','@idinstallselect')"><i class="fa fa-plus"></i> Add New</span>
+                                                    <span onclick="refreshamounts('@installpercent','@installamount')"><i class="fa fa-refresh" aria-hidden="true" style="color: #ed2629;margin-left:2px;cursor:pointer;"></i></span>
+                                                </td>
+
+                                            </tr>
+
+
+                                                    }
+
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            }
+                            @Model.responsestring
+
+
+                        </div>
+                        <div class="form-actions">
+
+                            <input type="submit" class="btn blue" value="Submit" />
+                        </div>
+                    </form>
+
+
+                }
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var feescomponentvalues;
+
+    function show(idoftable, addnewbutton, selectid) {
+
+        var valueselect = document.getElementById(selectid).value;
+        if (valueselect == '') {
+            alert("Please Select fees component");
+        }
+        else {
+            var element = document.getElementById(idoftable);
+            document.getElementById(addnewbutton).style.display = "none";
+            element.classList.add("show-table");
+            element.classList.remove("hide-table");
+
+        }
+    }
+
+    function refreshamounts(inputtext1, inputtext2) {
+        document.getElementById(inputtext1).value = 0;
+        document.getElementById(inputtext1).disabled = false;
+        document.getElementById(inputtext2).value = 0;
+        document.getElementById(inputtext2).disabled = false;
+    }
+
+    function disableadjucent(inputid, adjuscentid) {
+
+        //alert(inputid + "," + adjuscentid);
+        document.getElementById(inputid).value = 0;
+        document.getElementById(adjuscentid).value = 0;
+        document.getElementById(adjuscentid).disabled = true;
+
+    }
+
+
+</script>
+
+
+@if (Model.ChoosenDiscountBrandList.Count <= 0)
+{
+
+    <script type="text/javascript">
+        var x = document.getElementsByClassName("filter-option-inner-inner");
+        for (var i = 0; i < x.length; i++) {
+            x[i].html = "Choose Brand Name...";
+        }
+    </script>
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#discount-valid-from').change(function () {
+            document.getElementById("discount-valid-to").setAttribute("min", document.getElementById("discount-valid-from").value);
+            document.getElementById("discount-valid-to").value = document.getElementById("discount-valid-from").value;
+        });
+        $('.multiple-selection').selectpicker();
+        //$(".filter-option-inner-inner").html("Choose Brand Name...");
+    });
+
+</script>
+

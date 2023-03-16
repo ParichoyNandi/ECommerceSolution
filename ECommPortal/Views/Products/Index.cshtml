@@ -1,0 +1,279 @@
+﻿@*@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers*@
+@using Entities;
+@model ECommPortal.Models.CreateProductsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row form-row">
+
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Product Form </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="Products" asp-action="Create" enctype="multipart/form-data">
+                    <div class="form-body">
+
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class" asp-for="@Model.ProductDetails.BrandID">
+
+
+                                    <option value="" selected hidden>Choose Brand Name...</option>
+                                    @foreach (var b in Model.BrandList)
+                                    {
+                                        <option value=@b.BrandID>@b.BrandName</option>
+
+                                    }
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div id="brand-message" style="display:none;color:red;font-weight:500;">*** please choose correct Brand Name</div>
+                        
+                        <div id="Product-form">
+                            <div class="form-group">
+                                <label class="color-dark">Product Course</label>
+                                <div class="input-group">
+                                    <select id="product-courses" class="coupon-type-class" asp-for="@Model.ProductDetails.CourseID">
+
+                                        <option value="" selected>Choose Course...</option>
+
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="color-dark">Product Category</label>
+                                <div class="input-group">
+                                    <select id="product-category" class="coupon-type-class" asp-for="@Model.ProductDetails.CategoryDetails.CategoryID">
+
+                                        <option value="" selected>Choose Category...</option>
+
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Product Code</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" asp-for="@Model.ProductDetails.ProductCode" placeholder="Enter Product Code" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Product Name</label>
+                                <div class="input-group">
+
+
+                                    <input type="text" class="form-control" asp-for="@Model.ProductDetails.ProductName" placeholder="Enter Product Name" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Product Description</label>
+                                <div class="input-group">
+
+                                    <textarea class="form-control" rows="2" cols="50" asp-for="@Model.ProductDetails.ShortDesc"></textarea>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid From</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="product-valid-from" class="form-control" asp-for="@Model.ProductDetails.ValidFrom" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label class="color-dark">Valid To</label>
+                                    <div class="input-group">
+
+                                        <input type="date" id="product-valid-to" class="form-control" asp-for="@Model.ProductDetails.ValidTo" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="color-dark">Product Image</label>
+                                <div class="input-group">
+
+                                    <input type="file" asp-for="@Model.ProductImageIFile" class="form-control">
+
+                                </div>
+                            </div>
+                    </div>
+
+                        </div>
+                    <div id="product-submit" class="form-actions">
+
+                        <input type="submit" class="btn blue" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $("#name-of-brand").on('change', function () {
+            var e = document.getElementById("name-of-brand");
+
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/GetCourseMethod",
+                data: { brandid: e.value },
+                success: function (response) {
+                    //console.log(response);
+                    var select = document.getElementById('product-courses');
+                    $('#product-courses')
+                        .empty()
+                        .append('<option value="" selected>Choose Product Course...</option>');
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        var opt = document.createElement('option');
+                        opt.value = response[i].courseID;
+                        opt.innerHTML = response[i].courseName;
+                        select.appendChild(opt);
+
+
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/GetCategoryMethod",
+                data: { brandid: e.value },
+                success: function (response) {
+                    console.log(response);
+                    //console.log(response.length);
+                    if (response != null || response != undefined) {
+                        var select = document.getElementById('product-category');
+                        $('#product-category')
+                            .empty()
+                            .append('<option value="" selected>Choose Category...</option>');
+
+                        for (var i = 0; i < response.length; i++) {
+
+                            var opt = document.createElement('option');
+                            opt.value = response[i].categoryID
+                            opt.innerHTML = response[i].categoryName;
+                            select.appendChild(opt);
+
+
+                        }
+
+
+
+                        document.getElementById('Product-form').style.display = "block";
+                        document.getElementById('product-submit').style.display = "block";
+                        document.getElementById('brand-message').style.display = "none";
+                    }
+                    else {
+                        
+
+                        document.getElementById('Product-form').style.display = "none";
+                        document.getElementById('product-submit').style.display = "none";
+                        document.getElementById('brand-message').style.display = "block";
+                        
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+        $('#product-valid-from').change(function () {
+            document.getElementById("product-valid-to").setAttribute("min", document.getElementById("product-valid-from").value);
+            document.getElementById("product-valid-to").value = document.getElementById("product-valid-from").value;
+        });
+
+
+
+    });
+</script>

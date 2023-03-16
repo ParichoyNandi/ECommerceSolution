@@ -1,0 +1,497 @@
+﻿@using Entities;
+@model ECommPortal.Models.PlanPublishDeactiveViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row form-row">
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Publish / Deactive Plans </span>
+                </div>
+
+
+
+            </div>
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="PlanPublishDeactive" asp-action="Create">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class form-table-select multiple-selection" asp-for="@Model.ChoosenBrandLists" multiple data-live-search="true">
+
+                                    @{string brandliststring = null; }
+                                    @foreach (var b in Model.BrandLists)
+                                    {
+                                        if (Model.ChoosenBrandLists != null && Model.ChoosenBrandListString != "")
+                                        {
+                                            if (Model.ChoosenBrandLists.Contains(b.BrandID))
+                                            {
+                                                if (brandliststring == null)
+                                                {
+                                                    brandliststring = b.BrandName;
+                                                }
+                                                else
+                                                {
+                                                    brandliststring = brandliststring + "," + b.BrandName;
+                                                }
+                                                <option value=@b.BrandID selected>@b.BrandName</option>
+                                            }
+                                            else
+                                            { 
+                                            
+                                                 <option value=@b.BrandID>@b.BrandName</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                                <option value=@b.BrandID>@b.BrandName</option>
+                                        }
+
+                                    }
+
+                                    @if (Model.ChoosenBrandLists != null && Model.ChoosenBrandListString != "")
+                                    {
+                                        <script type="text/javascript">
+                                         var x = document.getElementsByClassName("filter-option-inner-inner");
+                                        for (var i = 0; i < x.length; i++)
+                                        {
+                                            x[i].html = "@brandliststring";
+                                        }
+                                        </script>
+
+
+                                    }
+                                    @*@foreach (var b in Model.BrandLists)
+        {
+            <option value=@b.BrandID>@b.BrandName</option>
+
+        }*@
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">Fetch</button>
+                        </div>
+
+                    </div>
+                </form>
+
+                @if (Model.ChoosenBrandLists != null && Model.ChoosenBrandListString != "")
+                {
+                    if (Model.PlanLists != null)
+                    {
+                        int count = Model.PlanLists.Count;
+
+
+                        <form asp-controller="PlanPublishDeactive" asp-action="Save">
+                            <div>
+                                <input type="hidden" asp-for="@Model.ChoosenBrandListString" value="@Model.ChoosenBrandListString" />
+                                <div class="form-group">
+                                    <label class="color-dark">Select the plan you want to Publish/Deactive</label>
+                                    <br>
+                                    <div class="input-group table-form" style="margin-top:10px;">
+
+                                        <div class="functional-div" style="display:flex;">
+                                            <div id="publishedstatus"></div>
+                                            <div id="publish-button" class="action-button" style="color:white;background:green;border:1px solid green;" onClick="myPublishFunction(@count)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+
+                                            <div id="deactive-button" class="action-button" style="color:white;background:red;border:1px solid red;" onClick="myDeactiveFunction(@count)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                            <input type="text" id="myPlanInput" onkeyup="myProductFunction()" placeholder="Search for Plan.." title="Type in a name" style="padding: 4px 20px 4px 40px !important;height:40px;">
+                                        </div>
+                                        <br>
+                                        <div style="width:100%;margin-top:10px;">
+                                            <table id="myPlanTable" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%;"></th>
+                                                        <th style="width:70%;">Plan Name</th>
+                                                        <th style="width:25%;">Action</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{int i = 0; }
+                                                    @foreach (var planlist in Model.PlanLists)
+                                                    {
+
+                                                        string rowid = "rowid" + i.ToString();
+                                                        string planname = "planname" + i.ToString();
+                                                        string planid = "planid" + i.ToString();
+                                                        string selectplan = "selectplan" + i.ToString();
+                                                        string updateddeactive = "updateddeactive" + i.ToString();
+                                                        string updatedpublish = "updatedpublish" + i.ToString();
+                                                        string planpublishedvalueid = "planpublishedvalue" + i.ToString();
+
+                                                        Model.ChoosenPlanLists.Add(new ECommPortal.Models.ValueObjects.ChoosenPlanForActiveDeactive());
+
+
+
+                                                        <tr id="@rowid">
+
+                                                            <td>
+                                                                <input id="@planid" type="hidden" value="@planlist.PlanID" asp-for="@Model.ChoosenPlanLists[i].UpdatedPlanLists.PlanID" />
+                                                                <input type="hidden" value="@planlist.PlanName" asp-for="@Model.ChoosenPlanLists[i].UpdatedPlanLists.PlanName" />
+
+                                                                <input id="@selectplan" type="checkbox" asp-for="@Model.ChoosenPlanLists[i].statusvalue" />
+
+                                                                @*@{Model.ChoosedPlanList[i].ChoosedPlanID = planlist.PlanID;}*@
+                                                            </td>
+                                                            <td> <label id="@planname" asp-for="@Model.ChoosenPlanLists[i].statusvalue">@planlist.PlanName</label></td>
+                                                            <td>
+                                                                <input type="hidden" id="@planpublishedvalueid" class="published-checkbox" value="@planlist.IsPublished" asp-for="@Model.ChoosenPlanLists[i].UpdatedPlanLists.IsPublished">
+                                                                @if (@planlist.IsPublished)
+                                                                {
+                                                            <div id="@updateddeactive" style="display: block; color: white; background: red; border: 1px solid red; padding: 7px 14px !important; border-radius: 20px !important;width:fit-content;cursor:pointer;" onclick="singleplandeactive(@planlist.PlanID,@i)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                                                    <div type="text" id="@updatedpublish" style="display: none; color: white; background: green; border: 1px solid green; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content; cursor: pointer; " onclick="singleplanpublish(@planlist.PlanID,@i)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+                                                                }
+                                                                else
+                                                                {
+                                                            <div id="@updateddeactive" style="display: none; color: white; background: red; border: 1px solid red; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content;cursor: pointer;" onclick="singleplandeactive(@planlist.PlanID,@i)"><span><i class="fa fa-times" aria-hidden="true"></i></span> Deactivate</div>
+                                                                    <div type="text" id="@updatedpublish" style="display: block; color: white; background: green; border: 1px solid green; padding: 7px 14px !important; border-radius: 20px !important; width: fit-content; cursor: pointer;" onclick="singleplanpublish(@planlist.PlanID,@i)"><span><i class="fa fa-check" aria-hidden="true"></i></span> Publish</div>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
+                                                        i++;
+
+                                                    }
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            @*<div class="form-actions">
+                                    <button type="submit" class="btn blue">Submit</button>
+                                </div>*@
+                        </form>
+                    }
+
+                    else
+                    {
+
+                        <div style="color:red;">**** Please select Correct Brand</div>
+
+                    }
+                }
+
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function myPublishFunction(plancount) {
+        document.getElementById("publishedstatus").innerHTML = "";
+        var flag = 0;
+        var publishstatus = null;
+        for (let i = 0; i < plancount; i++) {
+            var selectedplan = "planid" + i.toString();
+            var selectedplanid = document.getElementById(selectedplan).value;
+            var selectplan = "selectplan" + i.toString();
+           
+            //var updateddeactive = "updateddeactive" + i.toString();
+            //var updatedpublish = "updatedpublish" + i.toString();
+            //var productname = "productname" + i.toString();
+            //var productpublishedvalueid = "productpublishedvalue" + i.toString();
+            
+            if (document.getElementById(selectplan).checked == true) {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Ajax/ModifyPlanIsPublish",
+                    data: { planid: selectedplanid, ispublished: true },
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response.status);
+                        if (response.status == "OK" && response.message == "Success") {
+                            var updateddeactive = "updateddeactive" + i.toString();
+                            var updatedpublish = "updatedpublish" + i.toString();
+                            var planname = "planname" + + i.toString();
+                            document.getElementById(updatedpublish).style.display = "none";
+                            document.getElementById(updateddeactive).style.display = "block";
+                            document.getElementById(planname).style.color = "green";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Selected Plan Successfully Published</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML = document.getElementById("publishedstatus").innerHTML + "<p style='color:green;font-size:16px;font-weight:700'>****Selected Plan Successfully Published</p>";
+                            }
+                            console.log(i);
+                        }
+
+                        else {
+                            flag = 1;
+                            var planname = "planname" + + i.toString();
+                            document.getElementById(planname).style.color = "red";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML = document.getElementById("publishedstatus").innerHTML + "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+
+                        }
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+        }
+             
+
+
+
+        }
+
+
+
+
+
+
+    function myDeactiveFunction(plancount) {
+        var flag = 0;
+        var publishstatus = null;
+        document.getElementById("publishedstatus").innerHTML = "";
+        for (let i = 0; i < plancount; i++) {
+            var selectplan = "selectplan" + i.toString();
+            var selectedplan = "planid" + i.toString();
+            var selectedplanid = document.getElementById(selectedplan).value;
+           
+
+            // var productpublishedvalueid = "productpublishedvalue" + i.toString();
+           
+            if (document.getElementById(selectplan).checked == true) {
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Ajax/ModifyPlanIsPublish",
+                    data: { planid: selectedplanid, ispublished: false },
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response.status);
+                        if (response.status == "OK" && response.message == "Success") {
+                            var updateddeactive = "updateddeactive" + i.toString();
+                            var updatedpublish = "updatedpublish" + i.toString();
+                            var planname = "planname" + + i.toString();
+                            document.getElementById(updatedpublish).style.display = "block";
+                            document.getElementById(updateddeactive).style.display = "none";
+                            document.getElementById(planname).style.color = "green";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Plan Successfully Deactivated</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML += "<p style='color:green;font-size:16px;font-weight:700'>****Plan Successfully Deactivated</p>";
+                            }
+                            console.log(i);
+                        }
+
+                        else {
+                            flag = 1;
+                            var planname = "planname" + + i.toString();
+                            document.getElementById(planname).style.color = "red";
+                            if (document.getElementById("publishedstatus").innerHTML == "") {
+                                document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                            else {
+                                document.getElementById("publishedstatus").innerHTML += "<p style='color:red;font-size:16px;font-weight:700'>" + response.message + "</p>";
+                            }
+                        }
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+        }
+               
+
+
+    }
+
+
+
+
+    function myProductFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myPlanInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myPlanTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+    function checkfunction(checkboxid, rowno) {
+
+        if (document.getElementById("checkboxid").checked == true) {
+            document.getElementById("checkboxid").checked == false;
+
+        }
+        else {
+              document.getElementById("checkboxid").checked == true;
+
+        }
+
+    }
+
+
+    function singleplanpublish(selectedplanid, rowid) {
+
+
+        var updateddeactive = "updateddeactive" + rowid.toString();
+        var updatedpublish = "updatedpublish" + rowid.toString();
+        var planname = "planname" + rowid.toString();
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/ModifyPlanIsPublish",
+            data: { planid: selectedplanid, ispublished: true },
+            success: function (response) {
+                console.log(response);
+                console.log(response.status);
+                if (response.status == "OK" && response.message == "Success") {
+
+                    document.getElementById(updatedpublish).style.display = "none";
+                    document.getElementById(updateddeactive).style.display = "block";
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Plan Successfully Published</p>";
+                    document.getElementById(planname).style.color = "green";
+                }
+
+                else {
+
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message+"</p>";
+                    document.getElementById(planname).style.color = "red";
+
+                }
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+
+    function singleplandeactive(selectedplanid,rowid) {
+
+
+        var updateddeactive = "updateddeactive" + rowid.toString();
+        var updatedpublish = "updatedpublish" + rowid.toString();
+        var planname = "planname" + rowid.toString();
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/ModifyPlanIsPublish",
+            data: { planid: selectedplanid,ispublished:false },
+            success: function (response) {
+                console.log(response);
+                console.log(response.status);
+                if (response.status == "OK" && response.message == "Success") {
+                   document.getElementById(updatedpublish).style.display = "block";
+                   document.getElementById(updateddeactive).style.display = "none";
+                   document.getElementById("publishedstatus").innerHTML = "<p style='color:green;font-size:16px;font-weight:700'>****Plan Successfully Deactivated</p>";
+                   document.getElementById(planname).style.color = "green";
+                }
+
+                else {
+
+                    document.getElementById("publishedstatus").innerHTML = "<p style='color:red;font-size:16px;font-weight:700'>" + response.message+"</p>";
+                    document.getElementById(planname).style.color = "red";
+
+                }
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+    $('.multiple-selection').selectpicker();
+    //$(".filter-option-inner-inner").html("Choose Brand Name...");
+</script>

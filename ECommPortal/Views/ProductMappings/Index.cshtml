@@ -1,0 +1,392 @@
+﻿@using Entities;
+@model ECommPortal.Models.ProductMappingsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="row form-row">
+
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Product Mapping </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+        <div class="portlet-body form global-form">
+
+            <form asp-controller="ProductMappings" asp-action="Search">
+
+                <div class="form-group">
+                    <label class="color-dark">Choose A Brand</label>
+                    <div id="brand-multiselect" class="input-group">
+
+                        <select id="name-of-brand" class="name-brand-class" asp-for="@Model.ChoosenBrandId">
+
+
+                            <option value="" selected hidden>Choose Brand Name...</option>
+                            @foreach (var b in Model.BrandList)
+                            {
+                                <option value=@b.BrandID>@b.BrandName</option>
+
+                            }
+                        </select>
+
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+
+                    <input type="submit" class="btn blue" value="Proceed" />
+                </div>
+            </form>    
+
+            @if (Model.ChoosenBrandId > 0)
+            {
+
+                if (Model.ProductLists == null || Model.CenterLists == null)
+                {
+                <div style="color:red">**** Please select Correct Brand</div>
+                }
+                else
+                {
+                <form asp-controller="ProductMappings" asp-action="Create">
+
+
+                    <div class="form-body allmapping">
+                        <label class="color-dark" style="width:100%;">Choose Product For Mapping</label>
+                        <select id="product-dropdown" class="fee-component-class" style="padding: 1% !important;" asp-for="@Model.ProductID" required>
+
+
+                            <option value="" disabled selected hidden>Choose Product...</option>
+                            @foreach (var compo in Model.ProductLists)
+                            {
+                                <option value=@compo.ProductID>@compo.ProductName</option>
+                            }
+                        </select>
+
+
+                    </div>
+
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Centre FeePlan Mapping</span></label>
+                            <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; " /></div>
+                            <div class="form-group table-form">
+
+
+                                <table class="allmapping" style="width:100%;">
+                                    <thead style="">
+                                        <tr>
+                                            <th style="width:20%;">Centre</th>
+                                            <th style="width:30%;">Product Feeplan</th>
+                                            <th style="width:17%;">Valid From</th>
+                                            <th style="width:17%;">Valid To </th>
+                                            <th style="width:16%;">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+
+                                        @for (int i = 0; i < Model.CenterLists.Count; i++)
+                                        {
+
+
+
+                                            Model.ChoosenCentreFeePlanLists.Add(new ECommPortal.Models.ValueObjects.ChoosenCentreFeePlanMap());
+
+
+
+                                            string idname = "mappedrow" + i.ToString();
+                                            string idaddnewlump = "ddnewmaprow" + i.ToString();
+                                            string idfromvalid = "mappedfromvalid" + i.ToString();
+                                            string idtovalid = "mappedtovalid" + i.ToString();
+                                            string selectcentre = "centre" + i.ToString();
+                                            string selectfeeplan = "feeplan" + i.ToString();
+                                            int s = i + 1;
+                                            string idnameclick = "mappedrow" + s.ToString();
+
+                                            @if (i == 0)
+                                            {
+                                                <tr id="@idname" class="show-table">
+
+
+                                                    <td>
+
+                                                        <select id="@selectcentre" class="fee-component-class" asp-for="@Model.ChoosenCentreFeePlanLists[i].CentreID" onchange="getfeeplandetails('@selectcentre','@selectfeeplan')">
+
+
+                                                            <option value="" disabled selected hidden>Choose Centre...</option>
+                                                            @foreach (var compo in Model.CenterLists)
+                                                            {
+                                                                <option value=@compo.CenterID>@compo.CenterName</option>
+                                                            }
+                                                        </select>
+
+                                                    </td>
+
+
+                                                    <td>
+
+
+
+
+
+                                                        <select id="@selectfeeplan" class="fee-component-class" asp-for="@Model.ChoosenCentreFeePlanLists[i].FeePlanID">
+
+
+                                                            <option value="" disabled selected hidden>Choose Fee Plan...</option>
+                                                           
+                                                        </select>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <input type="date" id="@idfromvalid" class="form-control" asp-for="@Model.ChoosenCentreFeePlanLists[i].ValidFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="min_datesetup('@idfromvalid','@idtovalid')" required>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <input type="date" id="@idtovalid" class="form-control" asp-for="@Model.ChoosenCentreFeePlanLists[i].ValidTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                                    </td>
+                                                    <td>
+                                                        <div class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectcentre','@selectfeeplan')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            }
+
+
+                                            else
+                                            {
+
+                                                <tr id="@idname" class="hide-table">
+
+
+                                                    <td>
+
+
+
+
+
+                                                        <select id="@selectcentre" class="fee-component-class" asp-for="@Model.ChoosenCentreFeePlanLists[i].CentreID" onchange="getfeeplandetails('@selectcentre','@selectfeeplan')">
+
+
+                                                            <option value="" disabled selected hidden>Choose Centre...</option>
+                                                            @foreach (var compo in Model.CenterLists)
+                                                            {
+                                                                <option value=@compo.CenterID>@compo.CenterName</option>
+                                                            }
+                                                        </select>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <select id="@selectfeeplan" class="fee-component-class" asp-for="@Model.ChoosenCentreFeePlanLists[i].FeePlanID">
+
+
+                                                            <option value="" disabled selected hidden>Choose Centre...</option>
+                                                            
+                                                        </select>
+                                                    </td>
+                                                    <td>
+
+                                                        <input type="date" id="@idfromvalid" class="form-control" asp-for="@Model.ChoosenCentreFeePlanLists[i].ValidFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="min_datesetup('@idfromvalid','@idtovalid')" required>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <input type="date" id="@idtovalid" class="form-control" asp-for="@Model.ChoosenCentreFeePlanLists[i].ValidTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                                    </td>
+                                                    <td>
+                                                        <div class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectcentre','@selectfeeplan')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-body">
+                        <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Product - Exam Category Mapping</span></label>
+                        <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; " /></div>
+                        <label class="color-dark" style="width:100%;">Choose Exam Categories</label>
+                        <select id="exam-cat" class="exam-cat-class name-brand-class multiple-selection" asp-for="@Model.ChoosenExamCategoryLists" multiple data-live-search="true" style="border:none !important;padding:0% !important;">
+
+
+                            @foreach (var b in Model.ExamCategoryLists)
+                            {
+                                <option value=@b.ExamCategoryID>@b.ExamCategoryName</option>
+
+                            }
+                        </select>
+
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <input id="productmapsubmit" type="submit" class="btn blue" value="Submit" />
+                    </div>
+                </form>
+                }
+            }
+
+
+        </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var feescomponentvalues;
+
+    function show(idoftable,addnewbutton,centre,feeplan) {
+
+        if (document.getElementById(centre).value == '' || document.getElementById(feeplan).value == '') {
+            alert("please select centre and Feeplan");
+        }
+        else {
+            var element = document.getElementById(idoftable);
+            document.getElementById(addnewbutton).style.display = "none";
+            element.classList.add("show-table");
+            element.classList.remove("hide-table");
+        }
+
+    }
+
+
+    function getfeeplandetails(centreid,feeplanid) {
+
+        var selectedcentrevalue = document.getElementById(centreid).value;        
+        var selectedproductvalue = document.getElementById("product-dropdown").value;
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/GetFeePlanDetails",
+            data: { ProductId: selectedproductvalue, CentreId: selectedcentrevalue },
+            success: function (response) {
+                console.log(response);
+                var select = document.getElementById(feeplanid);
+                $('#' + feeplanid)
+                    .empty()
+                    .append('<option value="" selected>Choose Fee Plan...</option>');
+
+                for (var i = 0; i < response.length; i++) {
+
+                    var opt = document.createElement('option');
+                    opt.value = response[i].feePlanID;
+                    opt.innerHTML = response[i].feePlanName;
+                    select.appendChild(opt);
+
+
+                }
+
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+    function min_datesetup(fromvalidid,tovalidid)
+    {
+
+        document.getElementById(tovalidid).setAttribute("min", document.getElementById(fromvalidid).value);
+        document.getElementById(tovalidid).value = document.getElementById(fromvalidid).value;
+    }
+
+    $('.multiple-selection').selectpicker();
+    $(".filter-option-inner-inner").html("Choose Exam Categories...");
+
+
+    var submit_button = document.getElementById("productmapsubmit");
+    var flag = 0;
+
+    submit_button.addEventListener("click", function (e) {
+    var required = document.querySelectorAll("select[required]");
+    if (required) {
+        required.forEach(function (element) {
+            if (element.value.trim() == "") {
+                element.setAttribute('style', 'border-bottom:2px solid red !important;padding:2% !important;');
+                flag = 0;
+            }
+
+        });
+        }
+    });
+</script>
+
+
+

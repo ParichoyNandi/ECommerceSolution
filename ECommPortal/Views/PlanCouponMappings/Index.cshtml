@@ -1,0 +1,335 @@
+﻿@using Entities;
+@model ECommPortal.Models.CreateCouponPlanMapModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row form-row">
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Create Plan Coupon Mapping </span>
+                </div>
+
+
+
+            </div>
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+           
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="PlanCouponMappings" asp-action="Create">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="color-dark">Name of Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class" asp-for="@Model.ChoosenBranID">
+
+
+                                    <option value="" selected hidden>Choose Brand Name...</option>
+                                    @foreach (var b in Model.BrandList)
+                                    {
+                                        <option value=@b.BrandID>@b.BrandName</option>
+
+                                    }
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div id="cat" style="display:none">
+                            <div class="form-group">
+                                <label class="color-dark">Coupon Category</label>
+                                <div class="input-group">
+                                    <select id="coupon-cat" class="coupon-type-class">
+
+                                        <option value="" selected>Choose Coupon Category...</option>
+                                        @foreach (var coup in Model.CouponCategoryList)
+                                        {
+                                            <option value=@coup.CouponCategoryID>@coup.CouponCategoryDesc</option>
+
+
+                                        }
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="color-dark">Coupon Code</label>
+                                <div class="input-group">
+                                    <select id="coupon-items" class="coupon-type-class" asp-for="@Model.couponId">
+
+                                        <option value="" selected>Choose Coupon Code...</option>
+
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+                           </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">Fetch</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            @*    @if (Model.PlanList.Count > -1)*@
+                <!--{
+                <form asp-controller="PlanCouponMappings" asp-action="Save">
+                    <div>
+                        <input type="hidden" asp-for="@Model.couponId" value="@Model.couponId" />
+                        <div class="form-group">
+                            <label class="color-dark">Select the plan you want to add</label>
+                            <div class="input-group table-form">
+                                <input type="text" id="myPlanInput" onkeyup="myPlanFunction()" placeholder="Search for plan names.." title="Type in a name">
+                                <div style="width:100%;">
+                                    <table id="myPlanTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:10%;"></th>
+                                                <th style="width:90%;">Plan Name</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int i = 0; }
+                                            @foreach (var planlist in Model.PlanList)
+                                            {
+
+
+
+                                                                                     
+
+                                                Model.ChoosedPlanList.Add(new ChoosedPlan());
+
+
+
+
+                                                <tr>
+
+                                                    <td>
+                                                        <input type="hidden" value="@planlist.PlanID" asp-for="@Model.ChoosedPlanList[i].ChoosedPlanID" />
+                                                        <input type="hidden" value="@planlist.PlanName" asp-for="@Model.ChoosedPlanList[i].ChoosedPlanName" />
+
+                                                        <input type="checkbox" asp-for="@Model.ChoosedPlanList[i].statusvalue" />
+
+                                                    
+                                                    </td>
+                                                    <td> <label asp-for="@Model.ChoosedPlanList[i].statusvalue">@planlist.PlanName</label></td>
+                                                </tr>
+                                                i++;
+
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>-->
+
+
+
+                        @*<div class="form-group flex-form-group" style="margin-bottom:0px !important">
+                            <div class="form-group">
+
+                                <label class="color-dark">Valid From</label>
+                                <div class="input-group">
+
+                                    <input type="date" class="form-control" asp-for="@Model.ValidFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="color-dark">Valid To</label>
+                                <div class="input-group">
+
+                                    <input type="date" class="form-control" asp-for="@Model.ValidTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+
+
+                    <!--</div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn blue">Submit</button>
+                    </div>
+                </form>
+                }-->
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function myPlanFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myPlanInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myPlanTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+    function checkfunction(checkboxid, rowno) {
+
+        if (document.getElementById("checkboxid").checked == true) {
+            document.getElementById("checkboxid").checked == false;
+            
+        }
+        else {
+              document.getElementById("checkboxid").checked == true;
+            
+        }
+
+    }
+
+    jQuery(document).ready(function ($) {
+
+        $("#name-of-brand").on('change', function () {
+            if (document.getElementById("name-of-brand").value > 0) {
+                document.getElementById("cat").style.display = "block";
+            }
+            else {
+                alert("Please select Correct Brand");
+            }
+            
+
+        });
+
+        $("#coupon-cat").on('change', function () {
+            var e = document.getElementById("coupon-cat");
+            var brand = document.getElementById("name-of-brand").value;
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/AjaxMethod",
+                data: { catid: e.value, brandid: brand },
+                success: function (response) {
+                    console.log(response);
+                    var select = document.getElementById('coupon-items');
+                    $('#coupon-items')
+                        .empty()
+                        .append('<option value="" selected>Choose Coupon Code...</option>');
+                
+                    for (var i = 0; i < response.length; i++) {
+
+                        var opt = document.createElement('option');
+                        opt.value = response[i].couponID;
+                        opt.innerHTML = response[i].couponCode;
+                        select.appendChild(opt);
+
+
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+
+
+        /*$("#coupon-items").on('change', function () {
+            var e = document.getElementById("coupon-items");
+
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/AjaxMethodForPlan",
+                data: { couponid: e.value },
+                success: function (response) {
+                    console.log(response);
+                    var select = document.getElementById('coupon-items');
+                    
+                    /*$('#coupon-items')
+                        .empty()
+                        .append('<option value="" selected>Choose Coupon Code...</option>');
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        var opt = document.createElement('option');
+                        opt.value = response[i].couponID;
+                        opt.innerHTML = response[i].couponCode;
+                        select.appendChild(opt);
+
+
+                    }*/
+              /*  },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });*/
+
+
+
+    });
+</script>

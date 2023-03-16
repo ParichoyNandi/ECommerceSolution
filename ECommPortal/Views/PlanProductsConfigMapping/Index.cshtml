@@ -1,0 +1,715 @@
+﻿@using Entities;
+@model ECommPortal.Models.PlanProductsConfigMappingViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row form-row">
+
+
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light form-box">
+
+            <div class="portlet-title">
+                <div class="caption color-dark">
+
+                    <span class="caption-subject bold uppercase"> Plan Mapping </span>
+                </div>
+
+
+
+            </div>
+
+            <div style="display:flex;justify-content:center"><hr class="heading-hr"></div>
+
+
+
+
+
+            @if (Model.message != null)
+            {
+                if (Model.Responseflag == 0)
+                {
+                    <div class="col-md-12" style="background-color:green;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="col-md-12" style="background-color:red;padding:2%;width:100%;color:white;">
+
+                        @Model.message
+
+                    </div>
+
+                }
+
+
+            }
+            <div class="portlet-body form global-form">
+                <form asp-controller="PlanProductsConfigMapping" asp-action="Search">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="color-dark">Choose A Brand</label>
+                            <div id="brand-multiselect" class="input-group">
+
+                                <select id="name-of-brand" class="name-brand-class" asp-for="@Model.ChoosenBrandID">
+
+
+                                    <option value="" selected hidden>Choose Brand Name...</option>
+                                    @foreach (var b in Model.BrandLists)
+                                    {
+                                        <option value=@b.BrandID>@b.BrandName</option>
+
+                                    }
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue">Fetch</button>
+                        </div>
+
+                    </div>
+                </form>
+
+                @if (Model.ChoosenBrandID > 0)
+                {
+                    if (Model.ProductLists != null && Model.PlanLists !=null)
+                    {
+                        int count = Model.ProductLists.Count;
+
+
+            <form asp-controller="PlanProductsConfigMapping" asp-action="Save" id="ckeditorForm" enctype="multipart/form-data">
+
+
+                <div class="form-body allmapping">
+                    <label class="color-dark" style="width:100%;">Choose Plan For Mapping <span style="color:red"> *</span></label>
+                    <select class="fee-component-class" style="padding: 1% !important;" asp-for="@Model.ChoosenPlanID" required>
+
+
+                        <option value="" selected hidden>Choose Plan Name...</option>
+                        @foreach (var b in Model.PlanLists)
+                        {
+                            <option value=@b.PlanID>@b.PlanName</option>
+
+                        }
+                    </select>
+
+
+                </div>
+
+                <div>
+                    <input type="hidden" asp-for="@Model.ChoosenBrandID" value="@Model.ChoosenBrandID" />
+                    <div class="form-group">
+                        <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Plan Product Mapping</span></label>
+                        <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; "></div>
+                        <br>
+                        <label class="color-dark">Select the products you want to Map</label>
+
+                        <div class="input-group table-form">
+
+                            <input type="text" id="myPlanInput" onkeyup="myProductFunction()" placeholder="Search for Product.." title="Type in a name" style="padding: 4px 20px 4px 40px !important;">
+
+                            <div style="width:100%;margin-top:10px;max-height:200px;overflow-y:scroll;height:auto;">
+                                <table id="myPlanTable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%;"></th>
+                                            <th style="width:70%;">Product Name</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{int i = 0; }
+                                        @foreach (var productlist in Model.ProductLists)
+                                        {
+
+                                            string rowid = "rowid" + i.ToString();
+                                            string selectproduct = "selectproduct" + i.ToString();
+
+                                            string productpublishedvalueid = "productpublishedvalue" + i.ToString();
+
+                                            Model.ChoosenProductLists.Add(new ECommPortal.Models.ValueObjects.ChoosenProductDetails());
+
+
+
+                                            <tr id="@rowid">
+
+                                                <td>
+                                                    <input type="hidden" value="@productlist.ProductID" asp-for="@Model.ChoosenProductLists[i].ProductDetails.ProductID" />
+                                                    <input type="hidden" value="@productlist.ProductName" asp-for="@Model.ChoosenProductLists[i].ProductDetails.ProductName" />
+
+                                                    <input id="@selectproduct" type="checkbox" asp-for="@Model.ChoosenProductLists[i].statusvalue" />
+
+                                                    @*@{Model.ChoosedPlanList[i].ChoosedPlanID = planlist.PlanID;}*@
+                                                </td>
+                                                <td> <label asp-for="@Model.ChoosenProductLists[i].statusvalue">@productlist.ProductName</label></td>
+                                            </tr>
+                                            i++;
+
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Plan Config Mapping</span></label>
+                        <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; " /></div>
+                        <div class="form-group table-form">
+
+
+                            <table class="allmapping" style="width:100%;">
+                                <thead style="">
+                                    <tr>
+                                        <th style="width:20%;">Config Property</th>
+                                        <th style="width:30%;">Display Name</th>
+                                        <th style="width:30%;">Value</th>
+                                        <th style="width:16%;">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @{i = 0;
+                                    }
+                                    @foreach (var configdetails in Model.ConfigLists.Where(n => n.ConfigCode != "LOGO" && n.ConfigCode != "SUM"))
+                                    {
+
+
+
+                                        Model.ChoosenConfigLists.Add(new Config());
+
+
+
+                                        string idname = "mappedrow" + i.ToString();
+                                        string idaddnewlump = "ddnewmaprow" + i.ToString();
+
+                                        string selectconfig = "config" + i.ToString();
+                                        string displayname = "displayname" + i.ToString();
+                                        string defaultvalue = "defaultvalue" + i.ToString();
+
+                                        int s = i + 1;
+                                        string idnameclick = "mappedrow" + s.ToString();
+
+                                        @if (i == 0)
+                                        {
+                                            <tr id="@idname" class="show-table">
+
+
+                                                <td>
+
+                                                    <select id="@selectconfig" class="fee-component-class" asp-for="@Model.ChoosenConfigLists[i].ConfigID" onchange="searchdetails('@selectconfig','@displayname','@defaultvalue')">
+
+
+                                                        <option value="0" disabled selected>Choose Config...</option>
+                                                        <option value="-1"></option>
+                                                        @foreach (var compo in Model.ConfigLists.Where(n => n.ConfigCode != "LOGO" && n.ConfigCode != "SUM"))
+                                                        {
+                                                            <option value=@compo.ConfigID>@compo.ConfigName</option>
+                                                        }
+                                                    </select>
+
+                                                </td>
+
+
+                                                <td>
+
+
+                                                    <input type="text" id="@displayname" class="form-control" asp-for="@Model.ChoosenConfigLists[i].ConfigName">
+
+
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" id="@defaultvalue" class="form-control" asp-for="@Model.ChoosenConfigLists[i].ConfigDefaultValue">
+
+                                                </td>
+
+
+                                                <td>
+                                                    <div class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectconfig')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                </td>
+
+                                            </tr>
+
+                                        }
+
+
+                                        else
+                                        {
+
+                                            <tr id="@idname" class="hide-table">
+
+
+                                                <td>
+
+                                                    <select id="@selectconfig" class="fee-component-class" asp-for="@Model.ChoosenConfigLists[i].ConfigID" onchange="searchdetails('@selectconfig','@displayname','@defaultvalue')">
+
+
+                                                        <option value="0" disabled selected>Choose Config...</option>
+                                                        <option value="-1">Blank Property</option>
+                                                        @foreach (var compo in Model.ConfigLists.Where(n => n.ConfigCode != "LOGO" && n.ConfigCode != "SUM"))
+                                                        {
+                                                            <option value=@compo.ConfigID>@compo.ConfigName</option>
+                                                        }
+                                                    </select>
+
+                                                </td>
+
+
+                                                <td>
+
+
+                                                    <input type="text" id="@displayname" class="form-control" asp-for="@Model.ChoosenConfigLists[i].ConfigName">
+
+
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" id="@defaultvalue" class="form-control" asp-for="@Model.ChoosenConfigLists[i].ConfigDefaultValue">
+
+                                                </td>
+
+
+                                                <td>
+                                                    <div class="add-new" id="@idaddnewlump" onclick="show('@idnameclick','@idaddnewlump','@selectconfig')"><i class="fa fa-plus"></i> Add New</div>
+
+                                                </td>
+
+                                            </tr>
+
+
+                                        }
+                                        i = i + 1;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Summary Configuation Value</span></label>
+                        <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; " /></div>
+                        @{Model.summarydetails.ItemList.Add(new ECommPortal.Models.ValueObjects.SummaryItem());
+                        }
+
+
+                        <div class="summarycontainer">
+                            <div class="summaryheading">
+                                <h3> Introduction</h3>
+                                <input type="hidden" class="form-control" value="Introduction" asp-for="@Model.summarydetails.ItemList[0].Title">
+                            </div>
+
+                            <div class="summarydescription">
+                                <textarea id="summaryintroductioneditor" class="ck_editor_txt" asp-for="@Model.summarydetails.ItemList[0].Description" required></textarea>
+                            </div>
+
+                        </div>
+
+                        @{Model.summarydetails.ItemList.Add(new ECommPortal.Models.ValueObjects.SummaryItem());
+                        }
+
+                        <div class="summarycontainer">
+                            <div class="summaryheading">
+                                <h3>Assessment and Assignments</h3>
+                                <input type="hidden" class="form-control" value="Assessment and Assignments" asp-for="@Model.summarydetails.ItemList[1].Title">
+                            </div>
+
+                            <div class="summarydescription">
+                                <textarea id="summaryassessmenteditor" class="ck_editor_txt" asp-for="@Model.summarydetails.ItemList[1].Description" required></textarea>
+                            </div>
+
+                        </div>
+
+                        @{Model.summarydetails.ItemList.Add(new ECommPortal.Models.ValueObjects.SummaryItem());
+                        }
+
+                        <div class="summarycontainer">
+                            <div class="summaryheading">
+                                <h3>Interview preparation</h3>
+                                <input type="hidden" class="form-control" value="Interview preparation" asp-for="@Model.summarydetails.ItemList[2].Title">
+                            </div>
+
+                            <div class="summarydescription">
+                                <textarea id="summaryintervieweditor" class="ck_editor_txt" asp-for="@Model.summarydetails.ItemList[2].Description" required></textarea>
+                            </div>
+
+                        </div>
+
+                        @{Model.summarydetails.ItemList.Add(new ECommPortal.Models.ValueObjects.SummaryItem());
+                        }
+
+                        <div class="summarycontainer">
+                            <div class="summaryheading">
+                                <h3>Teacher Appointment 1 on 1</h3>
+                                <input type="hidden" class="form-control" value="Teacher Appointment 1 on 1" asp-for="@Model.summarydetails.ItemList[3].Title">
+                            </div>
+
+                            <div class="summarydescription">
+                                <textarea id="summaryappointmenteditor" class="ck_editor_txt" asp-for="@Model.summarydetails.ItemList[3].Description" required></textarea>
+                            </div>
+
+                        </div>
+
+                        @{Model.summarydetails.ItemList.Add(new ECommPortal.Models.ValueObjects.SummaryItem());
+                        }
+
+                        <div class="add-new-area">
+                            <div class="add-new-button"><i class="fa fa-plus"></i> Add New SUM</div>
+                        </div>
+
+                        <div class="summarycontainer newextrasummary">
+                            <div class="summaryheading">
+                                <div class="text"><input type="text" class="form-control" asp-for="@Model.summarydetails.ItemList[4].Title"></div>
+                                <div class="icon"><i class="fa fa-close" style="font-size:48px;color:white"></i></div>
+                            </div>
+
+                            <div class="summarydescription">
+                                <textarea id="summaryothereditor" asp-for="@Model.summarydetails.ItemList[4].Description"></textarea>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <script>
+                            CKEDITOR.replace('summaryintroductioneditor', {
+                                toolbar: [
+                                    { name: 'document', items: ['NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],			// Defines toolbar group without name.
+                                    '/',																					// Line break - next group will be placed in new line.
+                                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Underline', 'Bold', 'Italic'] }
+                                ]
+                            });
+
+
+
+                            CKEDITOR.replace('summaryassessmenteditor', {
+                                toolbar: [
+                                    { name: 'document', items: ['NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],			// Defines toolbar group without name.
+                                    '/',																					// Line break - next group will be placed in new line.
+                                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Underline', 'Bold', 'Italic'] }
+                                ]
+                            });
+
+                            CKEDITOR.replace('summaryintervieweditor', {
+                                toolbar: [
+                                    { name: 'document', items: ['NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],			// Defines toolbar group without name.
+                                    '/',																					// Line break - next group will be placed in new line.
+                                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Underline', 'Bold', 'Italic'] }
+                                ]
+                            });
+
+                            CKEDITOR.replace('summaryappointmenteditor', {
+                                toolbar: [
+                                    { name: 'document', items: ['NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],			// Defines toolbar group without name.
+                                    '/',																					// Line break - next group will be placed in new line.
+                                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Underline', 'Bold', 'Italic'] }
+                                ]
+                            });
+
+
+                            CKEDITOR.replace('summaryothereditor', {
+                                toolbar: [
+                                    { name: 'document', items: ['NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],			// Defines toolbar group without name.
+                                    '/',																					// Line break - next group will be placed in new line.
+                                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Underline', 'Bold', 'Italic'] }
+                                ]
+                            });
+                        </script>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="color-dark" style="text-align: center; width: 100%; font-size: 25px; line-height: 30px;"><span>Study Plan</span></label>
+                        <div style="display: flex; justify-content: center; margin-bottom: 20px;"><hr style="width: 10%; margin: 10px; border-top: 2px solid #090101de; " /></div>
+                        <div class="input-group">
+
+                            <input type="file" asp-for="@Model.ProductStudyPlanIFile" class="form-control">
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-actions">
+                    <button id="submit_button" type="submit" class="btn blue">Submit</button>
+                </div>
+            </form>
+                    }
+
+                    else
+                    {
+
+                        <div style="color:red;">**** Please select Correct Brand</div>
+
+                    }
+                }
+
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+   
+
+
+
+    function myProductFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myPlanInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myPlanTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+    function checkfunction(checkboxid, rowno) {
+
+        if (document.getElementById("checkboxid").checked == true) {
+            document.getElementById("checkboxid").checked == false;
+
+        }
+        else {
+              document.getElementById("checkboxid").checked == true;
+
+        }
+
+    }
+
+    function show(idoftable, addnewbutton, config) {
+
+        if (document.getElementById(config).value == '0') {
+            alert("please select Config Property");
+        }
+        else {
+            var element = document.getElementById(idoftable);
+            document.getElementById(addnewbutton).style.display = "none";
+            element.classList.add("show-table");
+            element.classList.remove("hide-table");
+        }
+
+    }
+
+    function searchdetails(config, displaynameid, defaultvalueid) {
+
+        //alert(document.getElementById('config0').value);
+        var configidvalue = document.getElementById(config).value;
+        //alert(configidvalue);
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/Getconfigdetails",
+            data: { configid: configidvalue },
+            success: function (response) {
+                console.log(response);
+
+                document.getElementById(displaynameid).value = response.configName;
+
+                document.getElementById(defaultvalueid).value = response.configDefaultValue;
+
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+    function searchheaderdetails(selectheader, displaytext) {
+
+        //alert(document.getElementById('config0').value);
+        var headeridvalue = document.getElementById(selectheader).value;
+        //alert(headeridvalue);
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/GetPlanHeaderdetails",
+            data: { headerid: headeridvalue },
+            success: function (response) {
+                console.log(response);
+
+                document.getElementById(displaytext).value = response.headerDisplayName;
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+    function searchsubheaderdetails(selectheader, displaytext) {
+
+        //alert(document.getElementById('config0').value);
+        var headeridvalue = document.getElementById(selectheader).value;
+       // alert(headeridvalue);
+        $.ajax({
+            type: "GET",
+            url: "/Ajax/GetPlanSubHeaderdetails",
+            data: { subheaderid: headeridvalue },
+            success: function (response) {
+                console.log(response);
+
+                document.getElementById(displaytext).value = response.subHeaderDisplayName;
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+
+
+    $('.multiple-selection').selectpicker();
+    $(".filter-option-inner-inner").html("Choose Exam Categories...");
+
+ /*   var submit_button = document.getElementById("submit_button");
+
+    submit_button.addEventListener("click", function (e) {
+        var required = document.querySelectorAll("select[required]");
+
+        required.forEach(function (element) {
+            if (element.value.trim() == "") {
+
+                element.setAttribute('style', 'border-bottom:2px solid red !important;padding:2% !important;');
+               
+            }
+        });
+    });
+  */
+
+
+    var submit_button = document.getElementById("submit_button");
+    var flag = 0;
+
+    submit_button.addEventListener("click", function (e) {
+
+        var messageLength = 1;
+        var blanktextmsg = "Please enter a message";
+
+        var editor1 = CKEDITOR.instances['summaryintroductioneditor'].getData().replace(/<[^>]*>/gi, '').length;
+        var editor2 = CKEDITOR.instances['summaryassessmenteditor'].getData().replace(/<[^>]*>/gi, '').length;
+        var editor3 = CKEDITOR.instances['summaryintervieweditor'].getData().replace(/<[^>]*>/gi, '').length;
+        var editor4 = CKEDITOR.instances['summaryappointmenteditor'].getData().replace(/<[^>]*>/gi, '').length;
+
+        if (!editor1 || !editor2 || !editor3 || !editor4) {
+            messageLength = 0;
+            if (!editor1) {
+                blanktextmsg = "Please Enter Introduction";
+            }
+
+            if (!editor2) {
+                blanktextmsg = "Please Enter Assessment and Assignments";
+            }
+
+            if (!editor3) {
+                blanktextmsg = "Please Enter Interview preparation";
+            }
+
+            if (!editor4) {
+                blanktextmsg = "Please Enter Teacher Appointment 1 on 1 ";
+            }
+        }
+        var required = document.querySelectorAll("select[required]");
+        if (!messageLength) {
+            flag = 0;
+        }
+        if (flag == 0) {
+            if (required || !messageLength) {
+                // flag = 0;
+                required.forEach(function (element) {
+                    if (element.value.trim() == "") {
+                        element.setAttribute('style', 'border-bottom:2px solid red !important;padding:2% !important;');
+                        flag = 0;
+                    }
+
+                });
+            }
+
+            if (!messageLength) {
+
+                alert(blanktextmsg);
+                flag = 0;
+                e.preventDefault();
+                return false;
+
+            }
+            else {
+                flag = 1;
+            }
+        }
+        else {
+            ckeditorForm.submit();
+        }
+    });
+
+    $(".add-new-button").click(function () {
+        $(".newextrasummary").attr('style', 'display:block !important;');
+        $(".add-new-area").attr('style', 'display:none !important;');
+
+    });
+
+    $(".newextrasummary .summaryheading .icon").click(function () {
+        $(".newextrasummary").attr('style', 'display:none !important;');
+        $(".add-new-area").attr('style', 'display:flex !important;');
+
+    });
+</script>
