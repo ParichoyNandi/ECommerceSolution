@@ -1,5 +1,5 @@
 ﻿@using Entities;
-@model ECommPortal.Models.PlanListDashboardViewModel
+@model Entities.Plan;
 
 @{
     ViewData["Title"] = "EditPlan";
@@ -75,45 +75,51 @@
                 </div>
                 <div class="form-align">
                     <div class="portlet-body form global-form">
-                        <form asp-controller="PlanListDashboard" asp-action="UpdateConfig" id="edit-form">
+                 <form asp-controller="PlanListDashboard" asp-action="EditConfig" id="edit-form">
                 <div id="Product-form">
-                    <div class="form-group">
-                        <label class="color-dark">Image</label>
+                   <div class="form-group">
+                        <label class="color-dark">Plan Image</label>
                        
                         <div class="input-group">
-                           
-                            <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanImage disabled>
+                                        @Html.TextBoxFor(m => m.PlanImage, new { @class = "form-control",@style="position: static"  })
+                                        @*<input type="url" class="form-control"  style="position: static;" value=@Model.PlanImage>*@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="color-dark">Price</label>
+                        <label class="color-dark">Course Duration</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanPrice required>
-                        </div>
+                            @*<input type="text" class="form-control"  style="position: static;" value="@Model.PlanCourseDuration" >*@
+                                        @Html.TextBoxFor(m => m.PlanCourseDuration, new { @class = "form-control",@style="position: static" })
+                                    </div>
                     </div>
                             <div class="form-group">
-                                <label class="color-dark">Discocunted Price</label>
+                                <label class="color-dark">Price</label>
                                 <div class="input-group">
-                                        <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanDiscountedPrice required>
+                                        @Html.TextBoxFor(m => m.PlanPrice, new { @class = "form-control",@style="position: static" })
+                                        @*<input type="text" class="form-control" style="position: static;" value="@Model.PlanPrice" >*@
                                 </div>
                             </div>
                                 <div class="form-group">
-                                    <label class="color-dark">Plan Description</label>
+                                    <label class="color-dark">Discounted Price</label>
                                     <div class="input-group">
-
-                                        <input type="string" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;"  value=@Model.GetPlanDetails.PlanDesc></textarea>
+                                        @Html.TextBoxFor(m => m.PlanDiscountedPrice, new { @class = "form-control",@style="position: static" })
+                                        @*<input type="text" id="plan-valid-from" class="form-control"  style="position: static;" value="@Model.PlanDiscountedPrice">*@
 
                                     </div>
                                 </div>
                   
                         <div class="form-group">
-                            <label class="color-dark">Course Duration</label>
+                            <label class="color-dark">Plan Description</label>
                             <div class="input-group">
-                                        <input type="string" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanCourseDuration>
+                                        @Html.TextAreaFor(m => m.PlanDesc, new { @class = "form-control",@style="position: static", @rows="7"  })
+                                        @*<textarea id="plan-valid-from" class="form-control" style="position: static;" rows="7">"@Model.PlanDesc"</textarea>*@
+
                             </div>
                         </div>
+                    
+                
+
                    
-                </div>
                             <div class="position-absolute" style="margin-top: 2.7%;">
                                 <div class="form-group col-md-2 search-btn">
 
@@ -130,7 +136,7 @@
                                                 </h4>
                                                 <p style="padding-left: 3%;">Do you want to save the changes? </p>
                                                 <div>
-                                                    <input type="hidden" id="planID" name="planID " asp-for="ChoosenPlanId"> <button class="position-btn btn btn-success" style="border: none;">Yes</button>
+                                                    <input type="hidden" id="planID" name="planID " > <button class="position-btn btn btn-success" style="border: none;">Yes</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +145,7 @@
                                 </div>
 
                             </div>
-                                
+                      </div>          
                 </form>
                 
                 </div>

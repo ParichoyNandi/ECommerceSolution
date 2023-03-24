@@ -83,99 +83,65 @@ namespace ECommPortal.Controllers
         }
 
         [HttpGet]
-      public ActionResult EditPlan(int planId)
+      public ActionResult EditPlan(int planid)
         {
             //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
             PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
 
-            planListDashboardView.GetPlanDetails = ecommPortalDBAccess.GetPlanDetails(planId);
+            planListDashboardView.GetPlanDetails = ecommPortalDBAccess.GetPlanDetails(planid);
 
             return View(planListDashboardView.GetPlanDetails);
         }
+        [HttpPost]
+        public ActionResult EditPlan(Plan plan)
+        {
+
+
+            //if (LoginID != null)
+            //{
+            //    TempData["UserName"] = LoginID;
+            //    return View("EditStats", plnd);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Accounts");
+            //}
+            return View(plan);
+        }
 
         [HttpGet]
-        public  ActionResult EditConfig(int planId)
+        public  ActionResult EditConfig(int planId,Plan plan)
         {
             //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
             PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
-
+            //planListDashboardView.UpdatePlanDetails = ecommPortalDBAccess.UpdatePlanDetails(plan);
             planListDashboardView.GetPlanDetails =  ecommPortalDBAccess.GetPlanDetails(planId);
             
                 return View(planListDashboardView.GetPlanDetails);
         }
-        //[HttpPost]
-
-        //public Task<ActionResult> EditConfig(PlanListDashboardViewModel plnd)
-        //{
-        //    //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
-        //    Plan plan = new Plan();
-
-        //    plnd.GetPlanDetails = ecommPortalDBAccess.GetPlanDetails();
-
-
-        //    if (LoginID != null)
-        //    {
-        //        TempData["UserName"] = LoginID;
-        //        return View("EditStats", plnd);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Accounts");
-        //    }
-        //}
-
-        public async Task<ActionResult> UpdateConfig(PlanListDashboardViewModel plnd)
+        [HttpPost]
+        public ActionResult EditConfig(Plan plan)
         {
-            //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
-            Plan plan = new Plan();
 
-            plnd.UpdatePlanDetails = ecommPortalDBAccess.UpdatePlanDetails(plan);
-
-
-            if (LoginID != null)
-            {
-                TempData["UserName"] = LoginID;
-                return View("EditStats", plnd);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Accounts");
-            }
+            PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
+            planListDashboardView.UpdatePlanConfig = ecommPortalDBAccess.UpdatePlanConfig(plan);
+            //if (LoginID != null)
+            //{
+            //    TempData["UserName"] = LoginID;
+            //    return View("EditStats", plnd);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Accounts");
+            //}
+            return View(plan);
         }
 
+       
 
 
 
-        //public IActionResult Index()
-        //{
-        //  ProductListDashboardViewModel pld = null;
-        //pld = new(); 
-
-        //pld.
-
-
-
-
-
-        //for (int i = 1; i <= 15; i++)
-        //{
-
-        //pld.ProductLists.Add(new Product()
-        //{
-        //  ProductID = i,
-        //    ProductCode = "productcode" + i
-        //  }); 
-        //}
-        //  if (LoginID != null)
-        // {
-        //   TempData["UserName"] = LoginID;
-        // return View(pld);
-        //}
-        //else
-        //{
-        //  return RedirectToAction("Index", "Accounts");
-        //}
-
+       
 
     }
 

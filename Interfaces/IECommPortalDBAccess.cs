@@ -13,5 +13,6 @@ namespace Interfaces
     {
         Plan GetPlanDetails(int planId);
         int UpdatePlanDetails(Plan plan);
+        int UpdatePlanConfig(Plan plan);
     }
 }

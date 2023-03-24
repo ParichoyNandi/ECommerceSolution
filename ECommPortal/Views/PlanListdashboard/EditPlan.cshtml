@@ -1,5 +1,5 @@
 ﻿@using Entities;
-@model ECommPortal.Models.PlanListDashboardViewModel
+@model Entities.Plan;
 
 @{
     ViewData["Title"] = "EditPlan";
@@ -81,27 +81,29 @@
                         <label class="color-dark">Plan ID</label>
                        
                         <div class="input-group">
-                           
-                            <input type="number" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanID disabled>
+                             @Html.TextBoxFor(m => m.PlanID, new { @class = "form-control",@style="position: static" })
+                            @*<input type="number" class="form-control"  style="position: static;" value=@Model.PlanID disabled>*@
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="color-dark">Plan Code</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanCode required>
+                             @Html.TextBoxFor(m => m.PlanCode, new { @class = "form-control",@style="position: static" })
+                            @*<input type="text" class="form-control"  style="position: static;" value=@Model.PlanCode required>*@
                         </div>
                     </div>
                             <div class="form-group">
                                 <label class="color-dark">Plan Name</label>
                                 <div class="input-group">
-                                        <input type="text" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanName required>
+                                     @Html.TextBoxFor(m => m.PlanName, new { @class = "form-control",@style="position: static" })
+                                        @*<input type="text" class="form-control" style="position: static;" value="@Model.PlanName" required>*@
                                 </div>
                             </div>
                                 <div class="form-group">
                                     <label class="color-dark">Plan Language</label>
                                     <div class="input-group">
-
-                                        <input type="text" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.PlanLanguageName disabled>
+                                        @Html.TextBoxFor(m => m.PlanLanguageName, new { @class = "form-control",@style="position: static" })
+                                        @*<input type="text" id="plan-valid-from" class="form-control"  style="position: static;" value="@Model.PlanLanguageName" disabled>*@
 
                                     </div>
                                 </div>
@@ -109,7 +111,8 @@
                         <div class="form-group">
                             <label class="color-dark">Valid To</label>
                             <div class="input-group">
-                                        <input type="datetime" id="plan-valid-from" class="form-control" asp-for="GetPlanDetails" style="position: static;" value=@Model.GetPlanDetails.ValidTo >
+                                @Html.TextBoxFor(m => m.ValidTo, new { @class = "form-control",@style="position: static" })
+                                        @*<input type="datetime" id="plan-valid-from" class="form-control"  style="position: static;" value=@Model.ValidTo >*@
                             </div>
                         </div>
                     
@@ -117,9 +120,9 @@
                     <div class="position-absolute" style="margin-top: 2.7%;">
                         <div class="form-group col-md-2 search-btn">
 
-                                 <button type="submit" form="edit-form" class="modal-button btn btn-success btn-lg btn-block" href="#myModal1" >Save <i class="fa fa-bookmark" aria-hidden="true"></i></button>
+                                 <button type="submit" form="edit-form" class="modal-button btn btn-success btn-lg btn-block" href="#myModal_@Model.PlanID" >Save <i class="fa fa-bookmark" aria-hidden="true"></i></button>
 
-                                <div id="myModal1" class="modal">
+                                <div id="myModal_@Model.PlanID" class="modal">
 
                                     <!-- Modal content -->
                                     <div class="modal-content">
@@ -130,10 +133,7 @@
                                             </h4>
                                             <p style="padding-left: 3%;">Do you want to save the changes? </p>
                                             <div>
-                                                <form asp-controller="PlanListDashboard" asp-action="UpdateConfig">
-                                                    <input type="hidden" id="planID" name="planID " asp-for="ChoosenPlanId">
-                                                        <button asp-for="UpdatePlanDetails" class="position-btn btn btn-success" style="border: none;">Yes</input>
-                                                    </form>
+                                             <button type="button" onclick="location.href='@Url.Action("EditConfig", "PlanListDashboard",new { planid = Model.PlanID })'" class="position-btn btn btn-success" style="border: none;">Yes</button
                                             </div>
                                         </div>
                                     </div>

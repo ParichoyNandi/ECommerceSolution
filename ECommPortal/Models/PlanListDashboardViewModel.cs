@@ -15,6 +15,7 @@ namespace ECommPortal.Models
         public int ChoosenPlanId { get; set; }
         public Plan GetPlanDetails {   get; set; }
         public int UpdatePlanDetails { get; set; }
-        
+        public int UpdatePlanConfig { get; set; }
+
     }
 }

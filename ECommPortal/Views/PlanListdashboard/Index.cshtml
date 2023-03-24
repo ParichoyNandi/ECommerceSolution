@@ -115,6 +115,7 @@
 
                     <tr class="head">
                         <th>Plan Logo</th>
+                        <th>Plan ID</th>
                         <th>Plan Code</th>
                         <th>Plan Name</th>
                         <th>Published</th>
@@ -125,36 +126,36 @@
 
                         foreach (var planlist in Model.PlanLists)
                         {
-                                 <tr style="background-color: #ffffff73;">
-                                 <td><img src="/rice-logo.jpg" height="20" width="30" /></td>
-                                  <td class="blockquote">@planlist.PlanCode</td>
-                                  <td class="blockquote">@planlist.PlanName</td>
-                                  <td class="blockquote">@planlist.IsPublished</td>
-                                  <td>
-                                        <button class="modal-button btn btn-primary" href="#myModal1">Modify</button>
-                                        
-                                        <!-- The Modal --> 
-                                        <div id="myModal1" class="modal">
+                                        <tr style="background-color: #ffffff73;">
+                                         <td><img src="/rice-logo.jpg" height="20" width="30" /></td>
+                                          <td class="blockquote" id="planId" >@planlist.PlanID</td>
+                                          <td class="blockquote">@planlist.PlanCode</td>
+                                          <td class="blockquote">@planlist.PlanName</td>
+                                          <td class="blockquote">@planlist.IsPublished</td>
+                                          <td>
+                                        <button class="modal-button btn btn-primary" href="#myModal_@planlist.PlanID">Modify</button>
+                                                
+                                                <!-- The Modal --> 
+                                                <div id="myModal_@planlist.PlanID" class="modal">
 
-                                            <!-- Modal content -->
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <span class="close">×</span>
-                                                    <h4 class=" bold uppercase" style="font-size: x-large;padding-left: 2.5%;">
-                                                        Confirm
-                                                    </h4>
-                                                    <p style="padding-left: 3%;">Do you want to modify the plan?</p>
-                                                    <form asp-controller="PlanListDashboard" asp-action="EditPlan?planId=@planlist.PlanID" class="form-right">
-                                                        <input type="hidden" id="planID" name="planID " value="@planlist.PlanID" asp-for="ChoosenPlanId">
-                                                        <button type="submit" id="buttonValue" class="position-btn btn btn-success" style="border: none;">Yes</button>
-                                                    </form>
+                                                    <!-- Modal content -->
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <span class="close">×</span>
+                                                            <h4 class=" bold uppercase" style="font-size: x-large;padding-left: 2.5%;">
+                                                                Confirm
+                                                            </h4>
+                                                            <p style="padding-left: 3%;">Do you want to modify the plan?</p>
+
+                                                        <button type="button" onclick="location.href='@Url.Action("EditPlan", "PlanListDashboard",new { planid = planlist.PlanID })'" class="position-btn btn btn-success" style="border: none;">Yes</button>
+                                                        
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                            </div>
-
-                                        </div>
-                                   
-                                  </td>
-                                    </tr>
+                                           
+                                          </td>
+                                            </tr>
                         }
                     }
 
@@ -169,6 +170,16 @@
     
         
     <script>
+
+    function rowClicked(row) {
+        // Get the value from the table cell
+        var value = row.cells[1].innerHTML;
+
+        // Set the value of a form field
+        document.getElementById('planid').value = value;
+    }
+
+
     function myProductFunction1() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("myPlanInput1");
@@ -212,6 +223,7 @@
             }
         }
     }
+    
 
 
 </script>

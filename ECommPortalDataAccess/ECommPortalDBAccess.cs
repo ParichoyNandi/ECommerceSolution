@@ -81,7 +81,7 @@ namespace ECommPortalDataAccess
             try
             {
 
-               SqlParameter[] sqlparams = new SqlParameter[5];
+               SqlParameter[] sqlparams = new SqlParameter[4];
                 sqlparams[0] = new SqlParameter("@PlanId", plan.PlanID);
                 sqlparams[1] = new SqlParameter("@PlanName", plan.PlanName);
                 sqlparams[2] = new SqlParameter("@ValidTo", plan.ValidTo);
@@ -104,6 +104,39 @@ namespace ECommPortalDataAccess
             return i;
         }
 
+        public int UpdatePlanConfig(Plan plan)
+        {
+            int i = 0;
+            DataHelper dh = new DataHelper(_conn);
+            SqlTransaction trans = dh.DataConn.BeginTransaction(IsolationLevel.ReadCommitted);
+
+            try
+            {
+
+                SqlParameter[] sqlparams = new SqlParameter[5];
+                sqlparams[0] = new SqlParameter("@PlanId", plan.PlanID);
+                sqlparams[1] = new SqlParameter("@Img", plan.PlanImage);
+                sqlparams[2] = new SqlParameter("@CourseDuration", plan.PlanCourseDuration);
+                sqlparams[3] = new SqlParameter("@Price", plan.PlanPrice);
+                sqlparams[4] = new SqlParameter("@DiscountedPrice", plan.PlanDiscountedPrice);
+                sqlparams[5] = new SqlParameter("@Summary", plan.PlanDesc);
+
+
+                i = dh.ExecuteNonQuery("ECOMMERCE.uspUpdatePlanConfigForAdmin", CommandType.StoredProcedure, trans, sqlparams);
+            }
+            finally
+            {
+                if (dh != null && trans == null)
+                {
+                    if (dh.DataConn != null)
+                    {
+                        dh.DataConn.Close();
+                    }
+                }
+            }
+
+            return i;
+        }
 
     }
 }
