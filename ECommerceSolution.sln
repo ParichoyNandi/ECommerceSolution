@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommManagement", "ECommManagement\ECommManagement.csproj", "{126C9075-11DD-49D8-93C1-99BFC1B8BEC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommPortalDataAccess", "ECommPortalDataAccess\ECommPortalDataAccess.csproj", "{8F8D3BCE-EBEE-4AB0-A19B-C441381E85DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommPortalDataAccess", "ECommPortalDataAccess\ECommPortalDataAccess.csproj", "{8F8D3BCE-EBEE-4AB0-A19B-C441381E85DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECOM_Updated", "ECOM_Updated\ECOM_Updated.csproj", "{334A547F-B35A-41A7-A40A-C052B5C57040}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{8F8D3BCE-EBEE-4AB0-A19B-C441381E85DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F8D3BCE-EBEE-4AB0-A19B-C441381E85DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F8D3BCE-EBEE-4AB0-A19B-C441381E85DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334A547F-B35A-41A7-A40A-C052B5C57040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334A547F-B35A-41A7-A40A-C052B5C57040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334A547F-B35A-41A7-A40A-C052B5C57040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334A547F-B35A-41A7-A40A-C052B5C57040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

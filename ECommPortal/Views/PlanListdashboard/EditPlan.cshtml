@@ -75,13 +75,13 @@
                 </div>
                 <div class="form-align">
                     <div class="portlet-body form global-form">
-                <form asp-controller="PlanListDashboard" asp-action="EditPlan"  id="edit-form">
+                <form asp-controller="PlanListDashboard" asp-action="EditPlan" id="edit-form">
                 <div id="Product-form">
                     <div class="form-group">
                         <label class="color-dark">Plan ID</label>
                        
                         <div class="input-group">
-                             @Html.TextBoxFor(m => m.PlanID, new { @class = "form-control",@style="position: static" })
+                                        @Html.TextBoxFor(m => m.PlanID, new { @class = "form-control",@style="position: static",})
                             @*<input type="number" class="form-control"  style="position: static;" value=@Model.PlanID disabled>*@
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                                 <div class="form-group">
                                     <label class="color-dark">Plan Language</label>
                                     <div class="input-group">
-                                        @Html.TextBoxFor(m => m.PlanLanguageName, new { @class = "form-control",@style="position: static" })
+                                        @Html.TextBoxFor(m => m.PlanLanguageName, new { @class = "form-control",@style="position: static",})
                                         @*<input type="text" id="plan-valid-from" class="form-control"  style="position: static;" value="@Model.PlanLanguageName" disabled>*@
 
                                     </div>
@@ -120,8 +120,7 @@
                     <div class="position-absolute" style="margin-top: 2.7%;">
                         <div class="form-group col-md-2 search-btn">
 
-                                 <button type="submit" form="edit-form" class="modal-button btn btn-success btn-lg btn-block" href="#myModal_@Model.PlanID" >Save <i class="fa fa-bookmark" aria-hidden="true"></i></button>
-
+                                   <button type="submit" form="edit-form" class="modal-button btn btn-success btn-lg btn-block" href="#myModal_@Model.PlanID" >Save <i class="fa fa-bookmark" aria-hidden="true"></i></button>
                                 <div id="myModal_@Model.PlanID" class="modal">
 
                                     <!-- Modal content -->
@@ -133,8 +132,10 @@
                                             </h4>
                                             <p style="padding-left: 3%;">Do you want to save the changes? </p>
                                             <div>
-                                             <button type="button" onclick="location.href='@Url.Action("EditConfig", "PlanListDashboard",new { planid = Model.PlanID })'" class="position-btn btn btn-success" style="border: none;">Yes</button
-                                            </div>
+                                              @*<button type="button" onclick="location.href='@Url.Action("EditConfig", "PlanListDashboard",new { planid = Model.PlanID })'" class="position-btn btn btn-success" style="border: none;">Yes</button*@
+                                              <button type="submit" class="position-btn btn btn-success" style="border: none;">Yes</button>
+                                            
+                                              </div>
                                         </div>
                                     </div>
 

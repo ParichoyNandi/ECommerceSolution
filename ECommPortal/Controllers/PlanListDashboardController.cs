@@ -92,33 +92,37 @@ namespace ECommPortal.Controllers
 
             return View(planListDashboardView.GetPlanDetails);
         }
+
+
         [HttpPost]
         public ActionResult EditPlan(Plan plan)
         {
+            PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
+            planListDashboardView.UpdatePlanDetails = ecommPortalDBAccess.UpdatePlanDetails(plan);
+            planListDashboardView.GetPlanDetails = ecommPortalDBAccess.GetPlanDetails(plan.PlanID);
 
-
-            //if (LoginID != null)
-            //{
-            //    TempData["UserName"] = LoginID;
-            //    return View("EditStats", plnd);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Accounts");
-            //}
-            return View(plan);
+            if (LoginID != null)
+            {
+                TempData["UserName"] = LoginID;
+                return View("EditConfig", planListDashboardView.GetPlanDetails);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Accounts");
+            }
+         
         }
 
         [HttpGet]
-        public  ActionResult EditConfig(int planId,Plan plan)
-        {
-            //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
-            PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
-            //planListDashboardView.UpdatePlanDetails = ecommPortalDBAccess.UpdatePlanDetails(plan);
-            planListDashboardView.GetPlanDetails =  ecommPortalDBAccess.GetPlanDetails(planId);
+        //public  ActionResult EditConfig(int planId,Plan plan)
+        //{
+        //    //plnd.GetPlanDetails = await apiplanlistdashboard.GetPlansDetailsApi(1);
+        //    PlanListDashboardViewModel planListDashboardView = new PlanListDashboardViewModel();
+        //    planListDashboardView.UpdatePlanDetails = ecommPortalDBAccess.UpdatePlanDetails(plan);
+        //    planListDashboardView.GetPlanDetails =  ecommPortalDBAccess.GetPlanDetails(planId);
             
-                return View(planListDashboardView.GetPlanDetails);
-        }
+        //        return View(planListDashboardView.GetPlanDetails);
+        //}
         [HttpPost]
         public ActionResult EditConfig(Plan plan)
         {
